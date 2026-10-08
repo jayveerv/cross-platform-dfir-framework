@@ -1,0 +1,13 @@
+{
+  "case_id": "CASE-S1",
+  "investigator": "Jayveer Vasava",
+  "linux_timezone_offset": "+05:30",
+  "linux_log_year": 2026,
+  "internal_ranges": [
+    "198.51.100.0/24"
+  ],
+  "credential_inventory": {
+    "web01:/home/ubuntu/.aws/credentials": "AKIAQ3EXAMPLEAPP0001",
+    "db01:/home/deploy/.aws/credentials": "AKIAQ3EXAMPLEDPL0005"
+  }
+}

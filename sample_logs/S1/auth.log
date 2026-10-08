@@ -1,0 +1,106 @@
+Sep 20 09:09:54 db01 CRON[1007]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 09:19:55 bastion sshd[1014]: Accepted publickey for devops from 10.0.4.192 port 54245 ssh2
+Sep 20 09:20:55 bastion sudo[1021]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 09:32:17 bastion CRON[1028]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 09:45:47 bastion sshd[1035]: Failed password for devops from 10.0.9.63 port 55189 ssh2
+Sep 20 09:46:07 bastion sshd[1042]: Accepted password for devops from 10.0.9.63 port 56921 ssh2
+Sep 20 09:54:08 web01 sshd[1049]: Accepted publickey for admin1 from 10.0.5.22 port 40223 ssh2
+Sep 20 09:55:08 web01 sudo[1056]: admin1 : TTY=pts/0 ; PWD=/home/admin1 ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 10:00:57 bastion sshd[1063]: Accepted publickey for admin1 from 10.0.5.134 port 48025 ssh2
+Sep 20 10:01:57 bastion sudo[1070]: admin1 : TTY=pts/0 ; PWD=/home/admin1 ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 10:11:17 app01 sshd[1077]: Accepted publickey for monitor from 10.0.4.63 port 32959 ssh2
+Sep 20 10:12:17 app01 sudo[1084]: monitor : TTY=pts/0 ; PWD=/home/monitor ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 10:16:56 app01 CRON[1091]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 10:41:28 web01 systemd-logind[1098]: New session 905 of user admin1.
+Sep 20 10:55:00 app01 CRON[1105]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 10:58:56 web01 CRON[1112]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 11:10:49 app01 systemd-logind[1119]: New session 721 of user admin1.
+Sep 20 11:36:03 web01 CRON[1126]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 11:42:18 app01 systemd-logind[1133]: New session 207 of user admin1.
+Sep 20 11:50:00 web01 sshd[1140]: Failed password for invalid user test from 192.0.2.77 port 33000 ssh2
+Sep 20 11:50:10 web01 sshd[1147]: Failed password for invalid user test from 192.0.2.77 port 33001 ssh2
+Sep 20 11:50:20 web01 sshd[1154]: Failed password for invalid user test from 192.0.2.77 port 33002 ssh2
+Sep 20 12:11:59 app01 sshd[1161]: Accepted publickey for devops from 10.0.8.166 port 37317 ssh2
+Sep 20 12:12:59 app01 sudo[1168]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 12:19:34 web01 sshd[1175]: Failed password for admin1 from 10.0.8.61 port 56869 ssh2
+Sep 20 12:19:54 web01 sshd[1182]: Accepted password for admin1 from 10.0.8.61 port 36354 ssh2
+Sep 20 12:22:22 bastion CRON[1189]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 12:26:06 bastion sshd[1196]: Accepted publickey for devops from 10.0.9.147 port 47235 ssh2
+Sep 20 12:27:06 bastion sudo[1203]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 12:29:13 web01 useradd[1210]: new user: name=svc92, UID=1860, GID=1905
+Sep 20 12:30:00 db01 sshd[1217]: Accepted publickey for deploy from 10.0.4.9 port 52000 ssh2
+Sep 20 12:35:00 db01 sudo[1224]: deploy : TTY=pts/0 ; PWD=/home/deploy ; USER=root ; COMMAND=/usr/bin/systemctl status postgresql
+Sep 20 12:41:22 db01 CRON[1231]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 12:46:27 app01 sshd[1238]: Failed password for admin1 from 10.0.4.78 port 40341 ssh2
+Sep 20 12:46:47 app01 sshd[1245]: Accepted password for admin1 from 10.0.4.78 port 36220 ssh2
+Sep 20 12:57:21 app01 CRON[1252]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 13:00:00 web01 sshd[1259]: Accepted publickey for ubuntu from 10.0.3.21 port 51000 ssh2
+Sep 20 13:02:21 web01 sshd[1266]: Failed password for svc-app from 10.0.2.46 port 31365 ssh2
+Sep 20 13:02:41 web01 sshd[1273]: Accepted password for svc-app from 10.0.2.46 port 42909 ssh2
+Sep 20 13:05:00 web01 sudo[1280]: ubuntu : TTY=pts/1 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+Sep 20 13:13:54 bastion useradd[1287]: new user: name=svc45, UID=1875, GID=1050
+Sep 20 13:19:51 db01 CRON[1294]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 13:24:29 app01 CRON[1301]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 13:59:16 web01 sshd[1308]: Failed password for devops from 10.0.8.60 port 44625 ssh2
+Sep 20 13:59:36 web01 sshd[1315]: Accepted password for devops from 10.0.8.60 port 36325 ssh2
+Sep 20 14:08:55 bastion systemd-logind[1322]: New session 786 of user devops.
+Sep 20 14:30:37 bastion sshd[1329]: Accepted publickey for monitor from 10.0.1.50 port 46111 ssh2
+Sep 20 14:30:58 web01 useradd[1336]: new user: name=svc26, UID=1704, GID=1516
+Sep 20 14:31:37 bastion sudo[1343]: monitor : TTY=pts/0 ; PWD=/home/monitor ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 14:40:00 web01 sshd[1350]: Failed password for invalid user admin from 203.0.113.45 port 40000 ssh2
+Sep 20 14:40:12 web01 sshd[1357]: Failed password for invalid user admin from 203.0.113.45 port 40001 ssh2
+Sep 20 14:40:24 web01 sshd[1364]: Failed password for invalid user admin from 203.0.113.45 port 40002 ssh2
+Sep 20 14:40:36 web01 sshd[1371]: Failed password for ubuntu from 203.0.113.45 port 40003 ssh2
+Sep 20 14:40:48 web01 sshd[1378]: Failed password for ubuntu from 203.0.113.45 port 40004 ssh2
+Sep 20 14:41:00 web01 sshd[1385]: Failed password for ubuntu from 203.0.113.45 port 40005 ssh2
+Sep 20 14:41:12 web01 sshd[1392]: Accepted password for ubuntu from 203.0.113.45 port 40010 ssh2
+Sep 20 14:42:12 web01 sudo[1399]: ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/bin/cat /home/ubuntu/.aws/credentials
+Sep 20 14:43:12 web01 sudo[1406]: ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/usr/bin/id
+Sep 20 14:58:19 bastion sshd[1413]: Accepted publickey for devops from 10.0.1.75 port 32059 ssh2
+Sep 20 14:59:19 bastion sudo[1420]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 15:18:33 web01 CRON[1427]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 15:27:37 app01 useradd[1434]: new user: name=svc49, UID=1224, GID=1366
+Sep 20 15:39:29 bastion sshd[1441]: Accepted publickey for monitor from 10.0.3.150 port 32972 ssh2
+Sep 20 15:40:29 bastion sudo[1448]: monitor : TTY=pts/0 ; PWD=/home/monitor ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 15:58:00 web01 useradd[1455]: new user: name=svc12, UID=1297, GID=1470
+Sep 20 16:23:58 db01 sshd[1462]: Accepted publickey for svc-app from 10.0.1.127 port 38815 ssh2
+Sep 20 16:24:58 db01 sudo[1469]: svc-app : TTY=pts/0 ; PWD=/home/svc-app ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 16:45:14 web01 sshd[1476]: Accepted publickey for admin1 from 10.0.7.23 port 49533 ssh2
+Sep 20 16:46:14 web01 sudo[1483]: admin1 : TTY=pts/0 ; PWD=/home/admin1 ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 16:51:21 app01 sshd[1490]: Failed password for monitor from 10.0.6.94 port 33570 ssh2
+Sep 20 16:51:41 app01 sshd[1497]: Accepted password for monitor from 10.0.6.94 port 30094 ssh2
+Sep 20 16:58:28 bastion CRON[1504]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 17:17:13 db01 sshd[1511]: Failed password for devops from 10.0.5.73 port 51161 ssh2
+Sep 20 17:17:33 db01 sshd[1518]: Accepted password for devops from 10.0.5.73 port 44609 ssh2
+Sep 20 17:30:00 web01 sshd[1525]: Accepted publickey for ubuntu from 10.0.3.21 port 51420 ssh2
+Sep 20 17:35:00 web01 sudo[1532]: ubuntu : TTY=pts/1 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/usr/bin/tail /var/log/syslog
+Sep 20 18:11:45 bastion CRON[1539]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 18:29:36 db01 CRON[1546]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 18:30:00 db01 sshd[1553]: Accepted publickey for deploy from 10.0.4.9 port 52111 ssh2
+Sep 20 18:57:36 bastion sshd[1560]: Failed password for svc-app from 10.0.4.68 port 57272 ssh2
+Sep 20 18:57:56 bastion sshd[1567]: Accepted password for svc-app from 10.0.4.68 port 58899 ssh2
+Sep 20 19:05:49 web01 sshd[1574]: Accepted publickey for svc-app from 10.0.9.159 port 38548 ssh2
+Sep 20 19:06:49 web01 sudo[1581]: svc-app : TTY=pts/0 ; PWD=/home/svc-app ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 19:08:44 db01 sshd[1588]: Failed password for monitor from 10.0.6.106 port 57532 ssh2
+Sep 20 19:09:04 db01 sshd[1595]: Accepted password for monitor from 10.0.6.106 port 40856 ssh2
+Sep 20 19:33:11 db01 CRON[1602]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 19:34:21 db01 sshd[1609]: Accepted publickey for devops from 10.0.3.94 port 54353 ssh2
+Sep 20 19:35:21 db01 sudo[1616]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 19:36:38 bastion sshd[1623]: Accepted publickey for devops from 10.0.9.20 port 34117 ssh2
+Sep 20 19:37:38 bastion sudo[1630]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 19:46:11 bastion sshd[1637]: Accepted publickey for svc-app from 10.0.1.43 port 50494 ssh2
+Sep 20 19:47:11 bastion sudo[1644]: svc-app : TTY=pts/0 ; PWD=/home/svc-app ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 19:53:15 db01 systemd-logind[1651]: New session 892 of user devops.
+Sep 20 20:11:01 bastion sshd[1658]: Accepted publickey for svc-app from 10.0.8.48 port 50273 ssh2
+Sep 20 20:12:01 bastion sudo[1665]: svc-app : TTY=pts/0 ; PWD=/home/svc-app ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 20:43:28 db01 sshd[1672]: Accepted publickey for devops from 10.0.1.20 port 41819 ssh2
+Sep 20 20:44:28 db01 sudo[1679]: devops : TTY=pts/0 ; PWD=/home/devops ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 20:56:18 web01 sshd[1686]: Accepted publickey for monitor from 10.0.9.150 port 32640 ssh2
+Sep 20 20:57:18 web01 sudo[1693]: monitor : TTY=pts/0 ; PWD=/home/monitor ; USER=root ; COMMAND=/usr/bin/apt update
+Sep 20 22:26:44 bastion useradd[1700]: new user: name=svc77, UID=1876, GID=1480
+Sep 20 22:36:26 bastion CRON[1707]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 22:37:09 web01 CRON[1714]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 23:11:59 db01 CRON[1721]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 23:18:26 bastion CRON[1728]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 23:20:51 web01 CRON[1735]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Sep 20 23:25:04 db01 CRON[1742]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)

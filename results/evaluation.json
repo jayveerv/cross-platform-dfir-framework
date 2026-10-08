@@ -1,0 +1,730 @@
+{
+ "generated": "2026-10-07T06:00:03.044133+00:00",
+ "python": "3.13.16",
+ "system": "Linux",
+ "scenarios": [
+  {
+   "name": "S1",
+   "description": "Full cross-platform attack (same attacker IP on all platforms)",
+   "score": {
+    "records_in_sources": 281,
+    "supported_records": 244,
+    "normalized_supported": 244,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 1,
+    "incidents_found": 1,
+    "missed_incidents": 0,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 38,
+    "tp": 38,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_alerts": 0,
+    "cross_platform_incidents": 1
+   },
+   "coverage": [
+    {
+     "incident": "INC-1",
+     "unified": 1.0,
+     "best_siloed": 0.42105263157894735
+    }
+   ],
+   "tamper": [
+    {
+     "test": "Control: untouched case",
+     "expect_detect": false,
+     "detected": false,
+     "passed": true
+    },
+    {
+     "test": "Evidence file altered (1 bit flipped)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry edited (actor name changed)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry deleted (middle of chain)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger truncated (last entry removed, anchor noted)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger forged: entry edited and whole hash chain recomputed (HMAC key set)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Same forgery checked WITHOUT key or anchor",
+     "expect_detect": false,
+     "limitation": true,
+     "detected": false,
+     "passed": true
+    }
+   ],
+   "timings": {
+    "acquisition": 0.0012418109999998705,
+    "normalization": 0.010553253000125551,
+    "correlation": 0.004701588999978412,
+    "output_and_custody": 0.0063227000000551925,
+    "custody_verification": 0.0005911569999170752,
+    "reporting": 0.0015534889998889412,
+    "total": 0.025483628999836583
+   },
+   "sources_processed": 3,
+   "report": "../cases/S1/report.html"
+  },
+  {
+   "name": "S2",
+   "description": "Credential pivot (Linux -> AWS from a different IP)",
+   "score": {
+    "records_in_sources": 268,
+    "supported_records": 231,
+    "normalized_supported": 231,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 1,
+    "incidents_found": 1,
+    "missed_incidents": 0,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 25,
+    "tp": 25,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_alerts": 0,
+    "cross_platform_incidents": 1
+   },
+   "coverage": [
+    {
+     "incident": "INC-1",
+     "unified": 1.0,
+     "best_siloed": 0.64
+    }
+   ],
+   "tamper": [
+    {
+     "test": "Control: untouched case",
+     "expect_detect": false,
+     "detected": false,
+     "passed": true
+    },
+    {
+     "test": "Evidence file altered (1 bit flipped)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry edited (actor name changed)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry deleted (middle of chain)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger truncated (last entry removed, anchor noted)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger forged: entry edited and whole hash chain recomputed (HMAC key set)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Same forgery checked WITHOUT key or anchor",
+     "expect_detect": false,
+     "limitation": true,
+     "detected": false,
+     "passed": true
+    }
+   ],
+   "timings": {
+    "acquisition": 0.0009377210001275671,
+    "normalization": 0.006916021999813893,
+    "correlation": 0.003595446999952401,
+    "output_and_custody": 0.00565540399998099,
+    "custody_verification": 0.0005072169999493781,
+    "reporting": 0.0015910330000679096,
+    "total": 0.019428145000119912
+   },
+   "sources_processed": 3,
+   "report": "../cases/S2/report.html"
+  },
+  {
+   "name": "S3",
+   "description": "Two concurrent independent attacks",
+   "score": {
+    "records_in_sources": 281,
+    "supported_records": 244,
+    "normalized_supported": 244,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 2,
+    "incidents_found": 2,
+    "missed_incidents": 0,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 38,
+    "tp": 38,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_alerts": 0,
+    "cross_platform_incidents": 1
+   },
+   "coverage": [
+    {
+     "incident": "INC-1",
+     "unified": 1.0,
+     "best_siloed": 1.0
+    },
+    {
+     "incident": "INC-2",
+     "unified": 1.0,
+     "best_siloed": 0.6666666666666666
+    }
+   ],
+   "tamper": [
+    {
+     "test": "Control: untouched case",
+     "expect_detect": false,
+     "detected": false,
+     "passed": true
+    },
+    {
+     "test": "Evidence file altered (1 bit flipped)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry edited (actor name changed)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry deleted (middle of chain)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger truncated (last entry removed, anchor noted)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger forged: entry edited and whole hash chain recomputed (HMAC key set)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Same forgery checked WITHOUT key or anchor",
+     "expect_detect": false,
+     "limitation": true,
+     "detected": false,
+     "passed": true
+    }
+   ],
+   "timings": {
+    "acquisition": 0.0009396689999903174,
+    "normalization": 0.0076016900000013266,
+    "correlation": 0.0038653269998576434,
+    "output_and_custody": 0.006073151000009602,
+    "custody_verification": 0.0004966789999798493,
+    "reporting": 0.001690933000190853,
+    "total": 0.020866850999937014
+   },
+   "sources_processed": 3,
+   "report": "../cases/S3/report.html"
+  },
+  {
+   "name": "S4",
+   "description": "Benign activity only (false-positive test)",
+   "score": {
+    "records_in_sources": 243,
+    "supported_records": 206,
+    "normalized_supported": 206,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 0,
+    "incidents_found": 0,
+    "missed_incidents": 0,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_alerts": 0,
+    "cross_platform_incidents": 0
+   },
+   "coverage": [],
+   "tamper": [
+    {
+     "test": "Control: untouched case",
+     "expect_detect": false,
+     "detected": false,
+     "passed": true
+    },
+    {
+     "test": "Evidence file altered (1 bit flipped)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry edited (actor name changed)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry deleted (middle of chain)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger truncated (last entry removed, anchor noted)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger forged: entry edited and whole hash chain recomputed (HMAC key set)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Same forgery checked WITHOUT key or anchor",
+     "expect_detect": false,
+     "limitation": true,
+     "detected": false,
+     "passed": true
+    }
+   ],
+   "timings": {
+    "acquisition": 0.0008791850000307022,
+    "normalization": 0.006554639999876599,
+    "correlation": 0.002723555000102351,
+    "output_and_custody": 0.004347879000079047,
+    "custody_verification": 0.00042002800000773277,
+    "reporting": 0.0008100800000647723,
+    "total": 0.015904378999948676
+   },
+   "sources_processed": 3,
+   "report": "../cases/S4/report.html"
+  },
+  {
+   "name": "S5",
+   "description": "HARD CASES: session collision + insider from internal IP",
+   "score": {
+    "records_in_sources": 258,
+    "supported_records": 221,
+    "normalized_supported": 221,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 2,
+    "incidents_found": 1,
+    "missed_incidents": 1,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 13,
+    "tp": 9,
+    "fp": 1,
+    "fn": 4,
+    "precision": 0.9,
+    "recall": 0.6923076923076923,
+    "f1": 0.7826086956521738,
+    "false_alerts": 1,
+    "cross_platform_incidents": 0
+   },
+   "coverage": [
+    {
+     "incident": "INC-2",
+     "unified": 0.0,
+     "best_siloed": 0.0
+    },
+    {
+     "incident": "INC-1",
+     "unified": 1.0,
+     "best_siloed": 1.0
+    }
+   ],
+   "tamper": [
+    {
+     "test": "Control: untouched case",
+     "expect_detect": false,
+     "detected": false,
+     "passed": true
+    },
+    {
+     "test": "Evidence file altered (1 bit flipped)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry edited (actor name changed)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger entry deleted (middle of chain)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger truncated (last entry removed, anchor noted)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Ledger forged: entry edited and whole hash chain recomputed (HMAC key set)",
+     "expect_detect": true,
+     "detected": true,
+     "passed": true
+    },
+    {
+     "test": "Same forgery checked WITHOUT key or anchor",
+     "expect_detect": false,
+     "limitation": true,
+     "detected": false,
+     "passed": true
+    }
+   ],
+   "timings": {
+    "acquisition": 0.0008626310000181547,
+    "normalization": 0.0066566469999997935,
+    "correlation": 0.0030380649998278386,
+    "output_and_custody": 0.0052163240000027145,
+    "custody_verification": 0.0004565869999169081,
+    "reporting": 0.0012289839999084506,
+    "total": 0.017637302000139243
+   },
+   "sources_processed": 3,
+   "report": "../cases/S5/report.html"
+  }
+ ],
+ "policy": [
+  {
+   "name": "S5 + policy",
+   "score": {
+    "records_in_sources": 258,
+    "supported_records": 221,
+    "normalized_supported": 221,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 2,
+    "incidents_found": 2,
+    "missed_incidents": 0,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 13,
+    "tp": 13,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.9285714285714286,
+    "recall": 1.0,
+    "f1": 0.962962962962963,
+    "false_alerts": 1,
+    "cross_platform_incidents": 0
+   }
+  },
+  {
+   "name": "S4 + policy",
+   "score": {
+    "records_in_sources": 243,
+    "supported_records": 206,
+    "normalized_supported": 206,
+    "completeness": 1.0,
+    "unexpected_events": 0,
+    "incidents_expected": 0,
+    "incidents_found": 0,
+    "missed_incidents": 0,
+    "false_incidents": 0,
+    "split_incidents": 0,
+    "merged_incidents": 0,
+    "attack_events": 0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "false_alerts": 0,
+    "cross_platform_incidents": 0
+   }
+  }
+ ],
+ "cloud": {
+  "exposed": {
+   "expected": {
+    "trail_logging_off": 1,
+    "root_mfa_missing": 1,
+    "admin_without_mfa": 2,
+    "stale_access_key": 3,
+    "public_bucket": 2,
+    "bucket_public_access_not_blocked": 1,
+    "sg_world_open_admin_port": 3
+   },
+   "found": {
+    "trail_logging_off": 1,
+    "root_mfa_missing": 1,
+    "admin_without_mfa": 2,
+    "stale_access_key": 3,
+    "public_bucket": 2,
+    "sg_world_open_admin_port": 3,
+    "bucket_public_access_not_blocked": 1
+   },
+   "expected_total": 13,
+   "found_total": 13,
+   "tp": 13,
+   "fp": 0,
+   "fn": 0,
+   "incidents": 0,
+   "events": 24,
+   "custody": true
+  },
+  "clean": {
+   "expected": {},
+   "found": {},
+   "expected_total": 0,
+   "found_total": 0,
+   "tp": 0,
+   "fp": 0,
+   "fn": 0,
+   "incidents": 0,
+   "events": 24,
+   "custody": true
+  },
+  "integration": {
+   "incidents": 1,
+   "key_states": 5,
+   "joined": 1,
+   "joined_keys": [
+    "AKIAQ3EXAMPLEAPP0001"
+   ],
+   "posture_unlinked": 13
+  }
+ },
+ "cloud_emulated": {
+  "available": true,
+  "single": {
+   "expected": {
+    "admin_without_mfa": 1,
+    "stale_access_key": 3,
+    "trail_logging_off": 1,
+    "trail_no_log_validation": 1,
+    "role_trusts_external_account": 1,
+    "role_trusts_anyone": 1,
+    "public_bucket": 1,
+    "bucket_public_access_not_blocked": 1,
+    "sg_world_open_admin_port": 3,
+    "root_mfa_missing": 1
+   },
+   "found": {
+    "root_mfa_missing": 1,
+    "admin_without_mfa": 1,
+    "stale_access_key": 3,
+    "trail_logging_off": 1,
+    "sg_world_open_admin_port": 3,
+    "trail_no_log_validation": 1,
+    "role_trusts_anyone": 1,
+    "role_trusts_external_account": 1,
+    "public_bucket": 1,
+    "bucket_public_access_not_blocked": 1
+   },
+   "expected_total": 14,
+   "found_total": 14,
+   "tp": 14,
+   "fp": 0,
+   "fn": 0,
+   "incidents": 0,
+   "custody": true,
+   "errors": 0,
+   "api_operations": 21,
+   "read_only": true,
+   "limited": [
+    "security_groups"
+   ]
+  },
+  "all": {
+   "expected": {
+    "admin_without_mfa": 1,
+    "stale_access_key": 3,
+    "trail_logging_off": 1,
+    "trail_no_log_validation": 1,
+    "role_trusts_external_account": 1,
+    "role_trusts_anyone": 1,
+    "public_bucket": 1,
+    "bucket_public_access_not_blocked": 1,
+    "sg_world_open_admin_port": 4,
+    "root_mfa_missing": 1
+   },
+   "found": {
+    "root_mfa_missing": 1,
+    "admin_without_mfa": 1,
+    "stale_access_key": 3,
+    "trail_logging_off": 1,
+    "trail_no_log_validation": 1,
+    "role_trusts_anyone": 1,
+    "role_trusts_external_account": 1,
+    "public_bucket": 1,
+    "bucket_public_access_not_blocked": 1,
+    "sg_world_open_admin_port": 4
+   },
+   "expected_total": 15,
+   "found_total": 15,
+   "tp": 15,
+   "fp": 0,
+   "fn": 0,
+   "incidents": 0,
+   "custody": true,
+   "errors": 0,
+   "api_operations": 22,
+   "read_only": true,
+   "limited": []
+  },
+  "created": {
+   "users": 6,
+   "roles": 5,
+   "buckets": 7,
+   "trails": 3
+  },
+  "integration": {
+   "incidents": 1,
+   "key_states": 5,
+   "joined": 1,
+   "joined_user": "app-uploader",
+   "joined_flags": [
+    "stale_access_key"
+   ],
+   "unlinked_alerts": 13
+  }
+ },
+ "ablation": {
+  "with_inventory": null,
+  "incidents_found": 2,
+  "split": 1,
+  "recall": 1.0
+ },
+ "scalability": [
+  {
+   "records": 1067,
+   "events": 913,
+   "acquisition": 0.001624284999934389,
+   "normalization": 0.024381659000027867,
+   "correlation": 0.013303778000135935,
+   "custody": 0.02078266200010148,
+   "total": 0.06009238400019967,
+   "throughput": 17755.99383769588,
+   "f1": 1.0,
+   "incidents": 1,
+   "completeness": 1.0
+  },
+  {
+   "records": 5241,
+   "events": 4428,
+   "acquisition": 0.006797431999984838,
+   "normalization": 0.1182635500001652,
+   "correlation": 0.06373681800005215,
+   "custody": 0.09265871299999162,
+   "total": 0.2814565130001938,
+   "throughput": 18620.993858459373,
+   "f1": 1.0,
+   "incidents": 1,
+   "completeness": 1.0
+  },
+  {
+   "records": 10375,
+   "events": 8692,
+   "acquisition": 0.012849173999939012,
+   "normalization": 0.23342864699998245,
+   "correlation": 0.13874663199999304,
+   "custody": 0.19170890800000961,
+   "total": 0.5767333609999241,
+   "throughput": 17989.248934745367,
+   "f1": 1.0,
+   "incidents": 1,
+   "completeness": 1.0
+  },
+  {
+   "records": 52218,
+   "events": 44121,
+   "acquisition": 0.05699221600002602,
+   "normalization": 1.2003181780000887,
+   "correlation": 1.0876449489999231,
+   "custody": 0.9766562380000323,
+   "total": 3.32161158100007,
+   "throughput": 15720.68218291743,
+   "f1": 1.0,
+   "incidents": 1,
+   "completeness": 1.0
+  },
+  {
+   "records": 104634,
+   "events": 88584,
+   "acquisition": 0.11024888600013583,
+   "normalization": 2.4058885809999992,
+   "correlation": 1.8186795710000752,
+   "custody": 1.914562554999975,
+   "total": 6.249379593000185,
+   "throughput": 16743.102006029305,
+   "f1": 1.0,
+   "incidents": 1,
+   "completeness": 1.0
+  }
+ ],
+ "overall_precision": 1.0,
+ "overall_recall": 1.0,
+ "overall_f1": 1.0
+}

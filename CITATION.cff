@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "A Scalable Cross-Platform DFIR Framework for Automated Evidence Collection, Correlation, and Cloud Forensic Investigation"
+authors:
+  - family-names: Vasava
+    given-names: Jayveer
+    affiliation: "Parul Institute of Engineering & Technology, Parul University"
+type: software
+license: MIT
+date-released: 2026-10-08

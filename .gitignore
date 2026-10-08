@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+cases/
+live_logs/
+live_host/
+live_triage/
+real_data/*
+!real_data/evtx_files.txt
+sample_logs/*
+!sample_logs/S1/
+*.key

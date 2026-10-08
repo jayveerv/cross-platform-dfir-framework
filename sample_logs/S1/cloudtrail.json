@@ -1,0 +1,1242 @@
+{
+ "Records": [
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T03:52:01Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000001-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T03:54:51Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000002-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T04:03:46Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000003-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLEAPP0001"
+   },
+   "eventTime": "2026-09-20T04:47:36Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "app-uploads",
+    "key": "u/6975.bin"
+   },
+   "responseElements": null,
+   "eventID": "00000004-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T04:58:31Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000005-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T05:00:06Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000006-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T05:03:01Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000007-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLEAPP0001"
+   },
+   "eventTime": "2026-09-20T05:13:57Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "app-uploads",
+    "key": "u/4565.bin"
+   },
+   "responseElements": null,
+   "eventID": "00000008-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T05:22:01Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000009-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T05:44:18Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000010-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T06:03:57Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000011-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T06:11:36Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000012-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T06:50:06Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000013-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T06:53:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000014-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T07:31:21Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000015-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T07:34:24Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000016-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T07:43:39Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000017-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T08:00:41Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000018-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T08:11:25Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "build-artifacts",
+    "key": "b/41.zip"
+   },
+   "responseElements": null,
+   "eventID": "00000019-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T08:18:03Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000020-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T08:39:49Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "build-artifacts",
+    "key": "b/105.zip"
+   },
+   "responseElements": null,
+   "eventID": "00000021-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T09:04:49Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000022-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T09:30:11Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000023-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLEAPP0001"
+   },
+   "eventTime": "2026-09-20T09:40:00Z",
+   "eventSource": "sts.amazonaws.com",
+   "eventName": "GetCallerIdentity",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000024-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLEAPP0001"
+   },
+   "eventTime": "2026-09-20T09:40:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000025-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLEAPP0001"
+   },
+   "eventTime": "2026-09-20T09:42:00Z",
+   "eventSource": "iam.amazonaws.com",
+   "eventName": "CreateAccessKey",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "userName": "app-uploader"
+   },
+   "responseElements": {
+    "accessKey": {
+     "accessKeyId": "AKIAQ3EXAMPLENEW0002",
+     "userName": "app-uploader",
+     "status": "Active"
+    }
+   },
+   "eventID": "00000026-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:43:00Z",
+   "eventSource": "cloudtrail.amazonaws.com",
+   "eventName": "StopLogging",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "name": "management-trail"
+   },
+   "responseElements": null,
+   "eventID": "00000027-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:44:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_00.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000028-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:44:10Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_01.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000029-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:44:20Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_02.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000030-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:44:30Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_03.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000031-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:44:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_04.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000032-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:44:50Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_05.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000033-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:45:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_06.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000034-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:45:10Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_07.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000035-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:45:20Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_08.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000036-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:45:30Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_09.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000037-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:45:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_10.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000038-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "app-uploader",
+    "accessKeyId": "AKIAQ3EXAMPLENEW0002"
+   },
+   "eventTime": "2026-09-20T09:45:50Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "203.0.113.45",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "finance-reports",
+    "key": "2026/q3/statement_11.xlsx"
+   },
+   "responseElements": null,
+   "eventID": "00000039-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T09:48:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000040-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T10:04:56Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000041-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T10:10:37Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000042-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T10:43:23Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000043-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T11:06:29Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000044-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T11:20:36Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000045-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T11:23:38Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000046-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T11:55:41Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000047-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T11:58:14Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000048-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T12:00:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000049-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T12:34:35Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000050-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T13:22:08Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000051-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T14:05:57Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000052-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T14:16:43Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000053-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T15:13:46Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000054-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T15:24:36Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "build-artifacts",
+    "key": "b/151.zip"
+   },
+   "responseElements": null,
+   "eventID": "00000055-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T15:49:04Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000056-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T15:49:37Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000057-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T16:34:53Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000058-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T16:37:55Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000059-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T16:50:04Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000060-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T17:35:44Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000061-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T18:00:57Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000062-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T18:02:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": {
+    "bucketName": "build-artifacts",
+    "key": "b/468.zip"
+   },
+   "responseElements": null,
+   "eventID": "00000063-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T18:05:41Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000064-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "AWSService",
+    "invokedBy": "ec2.amazonaws.com"
+   },
+   "eventTime": "2026-09-20T18:12:52Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeVolumes",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "ec2.amazonaws.com",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000065-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsServiceEvent"
+  },
+  {
+   "eventVersion": "1.08",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "devops",
+    "accessKeyId": "AKIAQ3EXAMPLEOPS0009"
+   },
+   "eventTime": "2026-09-20T18:25:45Z",
+   "eventSource": "ec2.amazonaws.com",
+   "eventName": "DescribeInstances",
+   "awsRegion": "ap-south-1",
+   "sourceIPAddress": "198.51.100.10",
+   "userAgent": "aws-cli/2.15.0",
+   "requestParameters": null,
+   "responseElements": null,
+   "eventID": "00000066-aaaa-bbbb-cccc-000000000000",
+   "eventType": "AwsApiCall"
+  }
+ ]
+}
