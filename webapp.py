@@ -123,6 +123,11 @@ def dashboard():
     return send_file(p)
 
 
+@app.get("/sample-report")
+def sample_report():
+    return send_file(os.path.join(ROOT, "docs", "report_S1.html"))
+
+
 @app.get("/cases/<name>/<path:f>")
 def case_file(name, f):
     d = _case_dir(name)

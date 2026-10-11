@@ -34,12 +34,16 @@ const B = (() => {
   setInterval(() => {
     for (const [jid, q] of Object.entries(Q)) {
       const j = JOBS[jid]; if (!j || !q.length) continue;
+      // background tabs tick at most once a second, and long logs should not crawl: take several events per tick then
+      const take = document.hidden ? q.length : Math.max(1, Math.ceil(q.length / 10));
+      for (let k = 0; k < take && q.length; k++) {
       const d = q.shift(), now = Date.now();
       if (d.type === "log") j.log.push({t: new Date().toTimeString().slice(0,8), msg: d.msg});
       if (d.type === "files") j.files = d.files;
       if (d.type === "stage") { if (j.stage !== d.stage && !j.stages_done.includes(j.stage)) j.stages_done.push(j.stage); j.stage = d.stage; }
       if (d.type === "done") { Object.assign(j, {state: "done", stage: "done", case: d.case, finished: now, stages_done: ["intake","acquisition","normalization","correlation","custody","reporting","done"]}); }
       if (d.type === "error") { Object.assign(j, {state: "error", error: d.error, finished: now}); j.log.push({t: new Date().toTimeString().slice(0,8), msg: "ERROR: " + d.error}); }
+      }
     }
   }, 140);
   const safe = n => (String(n||"").trim().replace(/[^A-Za-z0-9_.-]+/g, "-").replace(/^[-.]+|[-.]+$/g, "").slice(0, 60)) || ("CASE-" + new Date().toISOString().slice(0,19).replace(/[-:T]/g, ""));
@@ -126,21 +130,59 @@ function toast(msg, err) {
   $("#theme").onclick = () => {
     const n = document.documentElement.dataset.theme === "light" ? "dark" : "light";
     document.documentElement.dataset.theme = n; try { localStorage.setItem("cpdfir-theme", n); } catch {}
+    const f = document.querySelector("#embed"); if (f && f.contentWindow) f.contentWindow.postMessage({cpdfirTheme: n}, "*");
   };
 })();
 
+// ------------------------------------------------------------------ one menu for the whole framework
+const RESULTS = [["overview","◎","Mission Control"],["collection","⛁","Evidence Collection"],["correlation","⟁","Cross-Platform Correlation"],
+  ["investigation","⌕","Attack Investigation"],["cloud","☁","Cloud Forensics"],["custody","⛨","Chain of Custody"],["mitre","▦","MITRE ATT&CK Coverage"],
+  ["scale","↗","Scalability"],["realdata","✳","Real-World Validation"],["explorer","≡","Evidence Explorer"]];
+const SAMPLE_REPORT = MODE === "browser" ? "report_S1.html" : "/sample-report";
+function buildNav() {
+  $("#side").innerHTML = `
+    <div class="grp">Investigate</div>
+    <a href="#/new" data-nav="new"><i>＋</i>New investigation</a>
+    <a href="#/cases" data-nav="cases"><i>▤</i>Cases <span class="cnt" id="ncases"></span></a>
+    <div id="casenav"></div>
+    <div class="grp">Results</div>
+    ${RESULTS.map(([id, ic, t]) => `<a href="#/results/${id}" data-nav="results:${id}"><i>${ic}</i>${t}</a>`).join("")}
+    <div class="grp">Framework</div>
+    <a href="#/about" data-nav="about"><i>◇</i>How it works</a>
+    <a href="#/report" data-nav="report"><i>▣</i>Sample forensic report</a>
+    <a href="${REPO}" target="_blank" rel="noopener"><i>⌥</i>Source code (GitHub) ↗</a>
+    <div class="who" id="who"></div>`;
+}
+buildNav();
+function viewEmbed(src, banner) {
+  $("#casenav").innerHTML = "";
+  $("#view").classList.add("full");
+  $("#view").innerHTML = (banner || "") + `<iframe id="embed" title="CP-DFIR results" src="${src}"></iframe>`;
+}
+
 // ------------------------------------------------------------------ router
 async function route() {
-  const h = location.hash.replace(/^#\/?/, "") || "new";
+  const h = location.hash.replace(/^#\/?/, "") || "results/overview";
   const [page, a, b] = h.split("/").map(decodeURIComponent);
-  document.querySelectorAll(".side a[data-nav]").forEach(x => x.classList.toggle("on", x.dataset.nav === page || (page==="case" && x.dataset.nav==="cases")));
+  const key = page === "results" ? "results:" + (a || "overview") : page;
+  document.querySelectorAll(".side a[data-nav]").forEach(x => x.classList.toggle("on", x.dataset.nav === key || (page==="case" && x.dataset.nav==="cases")));
+  $("#view").classList.remove("full");
   try {
+    if (page === "results") {
+      const id = RESULTS.some(r => r[0] === a) ? a : "overview";
+      const f = document.querySelector("#embed");
+      if (f && f.dataset.kind === "results") { $("#casenav").innerHTML = ""; $("#view").classList.add("full"); f.contentWindow.location.hash = id; return; }
+      viewEmbed(`${DASH}?embed=1#${id}`, id === "overview" ? `<div class="tryit"><span><b>Try the framework yourself:</b> upload Windows / Linux / AWS logs or run a built-in attack — ${MODE === "browser" ? "it runs right here in your browser" : "it runs on this computer"}.</span><a class="btn pri sm" href="#/new">＋ New investigation</a></div>` : "");
+      document.querySelector("#embed").dataset.kind = "results";
+      return;
+    }
+    if (page === "report") return viewEmbed(SAMPLE_REPORT);
     if (page === "new") return viewNew();
     if (page === "cases") return viewCases();
     if (page === "job") return viewJob(a);
     if (page === "case") return viewCase(a, b || "overview");
     if (page === "about") return viewAbout();
-    viewNew();
+    location.hash = "#/results/overview";
   } catch (e) { $("#view").innerHTML = `<div class="card empty">${esc(e.message)}</div>`; }
 }
 window.addEventListener("hashchange", route);
@@ -214,7 +256,7 @@ ${MODE === "browser" ? `      <div class="opt"><div class="ic">🔒</div><div st
       <div class="opt"><div class="ic">🖥</div><div style="flex:1"><b>Live triage, INPUT folder, AWS collection</b><p>These read evidence directly from a computer or an AWS account, so they need the desktop version: download the repository and double-click <span class="mono">start_web.bat</span>.</p>
         <div class="row"><a class="btn sm" href="${REPO}" target="_blank" rel="noopener">GitHub repository ↗</a><a class="btn sm" href="${REPO}/archive/refs/heads/main.zip">Download desktop version (.zip)</a></div></div></div>
       <div class="opt"><div class="ic">📊</div><div style="flex:1"><b>Framework evaluation</b><p>Accuracy on S1–S5, 25/25 tamper tests, AWS checks, scalability to 100,000 records and validation on real public data.</p>
-        <div class="row"><a class="btn sm" href="${DASH}" target="_blank" rel="noopener">Open evaluation dashboard ↗</a></div></div></div>
+        <div class="row"><a class="btn sm" href="#/results/overview">Open evaluation results</a></div></div></div>
 ` : `      <div class="opt"><div class="ic">📂</div><div style="flex:1"><b>INPUT folder</b><p>Copy logs into <span class="mono">${esc(INFO.inbox_path||"INPUT")}</span> with Explorer, then analyse them all at once.</p>
         <div class="small muted">${inbox.length ? `${inbox.length} item(s) waiting: ${inbox.slice(0,4).map(esc).join(", ")}${inbox.length>4?" …":""}` : "Folder is empty right now."}</div>
         <div class="row" style="margin-top:8px"><button class="btn sm" id="runin" ${inbox.length?"":"disabled"}>Analyse INPUT folder</button><button class="btn sm" id="rein">Refresh</button></div></div></div>
@@ -222,7 +264,7 @@ ${MODE === "browser" ? `      <div class="opt"><div class="ic">🔒</div><div st
         ${INFO.admin?"":`<div class="small" style="color:var(--am)">Not running as Administrator: some evidence (Security log, other users' processes) will be limited. Start the console with “Run as administrator” for a full triage.</div>`}
         <div class="row" style="margin-top:8px"><button class="btn sm" id="runtr">Start live triage</button></div></div></div>
       <div class="opt"><div class="ic">📊</div><div style="flex:1"><b>Framework evaluation</b><p>Re-runs accuracy (S1–S5), tamper tests, cloud checks and scalability, then rebuilds the evaluation dashboard.</p>
-        <div class="row"><button class="btn sm" id="runev">Run evaluation (~1-2 min)</button><a class="btn sm" href="${DASH}" target="_blank" rel="noopener">Open dashboard ↗</a></div></div></div>
+        <div class="row"><button class="btn sm" id="runev">Run evaluation (~1-2 min)</button><a class="btn sm" href="#/results/overview">Open results</a></div></div></div>
 `}
     </div>
   </div>
@@ -342,7 +384,7 @@ function viewJob(id) {
         $("#jt").textContent = j.kind === "evaluate" ? "Evaluation finished" : "Investigation complete";
         $("#jl").textContent = `Finished in ${j.elapsed} s.`;
         $("#jbtn").innerHTML = j.case ? `<a class="btn pri" href="#/case/${encodeURIComponent(j.case)}">Open case ${esc(j.case)} →</a>${caseButtons(j.case, true).replace("btn pri", "btn")}`
-                                      : `<a class="btn pri" href="${DASH}" target="_blank" rel="noopener">Open evaluation dashboard ↗</a>`;
+                                      : `<a class="btn pri" href="#/results/overview">Open evaluation results →</a>`;
         if (j.case) wireCaseButtons(j.case, $("#jbtn"));
         refreshCount();
         CUR = null;

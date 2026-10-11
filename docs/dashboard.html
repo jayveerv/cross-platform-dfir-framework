@@ -134,6 +134,8 @@ input.q:focus{border-color:var(--cy)}
 .scroll{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:10px}
 .foot{margin-top:26px;font-size:11.5px;color:var(--mu2)}
 svg text{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif}
+/* ---------- embedded inside the CP-DFIR console (one app, one menu) */
+.embed .top,.embed nav{display:none}.embed .wrap{min-height:100%}.embed main{padding-top:6px}
 </style></head>
 <body>
 <div class="top">
@@ -530,5 +532,6 @@ document.addEventListener("input",e=>{if(e.target.id=="q")drawExp()});document.a
 const root=document.documentElement;
 try{if(location.search.includes("light")||localStorage.getItem("cpdfir-theme")=="light")root.classList.add("light")}catch(e){if(location.search.includes("light"))root.classList.add("light")}
 $("#theme").onclick=()=>{root.classList.toggle("light");try{localStorage.setItem("cpdfir-theme",root.classList.contains("light")?"light":"dark")}catch(e){}};
+if(location.search.includes("embed")||window.self!==window.top){root.classList.add("embed");addEventListener("message",e=>{if(e.data&&e.data.cpdfirTheme)root.classList.toggle("light",e.data.cpdfirTheme=="light")})}
 go();
 </script></body></html>
