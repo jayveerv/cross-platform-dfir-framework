@@ -397,7 +397,12 @@ input.q:focus{border-color:var(--cy)}
 .foot{margin-top:26px;font-size:11.5px;color:var(--mu2)}
 svg text{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif}
 /* ---------- embedded inside the CP-DFIR console (one app, one menu) */
-.embed .top,.embed nav{display:none}.embed .wrap{min-height:100%}.embed main{padding-top:6px}
+.embed .top,.embed nav{display:none}.embed .wrap{min-height:100%}.embed main{padding:22px 26px 60px}
+/* same look as the console: plain titles and cards, no gradients or glow bars */
+.embed .hero{background:var(--panel)}.embed .hero h2{font-size:22px;font-weight:650}.embed .hero h2 em{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--tx)}
+.embed .sh h1{font-size:22px;font-weight:650}.embed .kw{color:var(--mu2)}
+.embed .card{border-radius:12px;padding:18px}.embed .card h3 i,.embed .card h3 svg{color:var(--mu2)}
+.embed .kpi:before{display:none}.embed .kpi .ic{display:none}.embed .kpi .v{font-size:28px;font-family:var(--mono);color:var(--c,var(--tx))}
 </style></head>
 <body>
 <div class="top">
@@ -794,6 +799,7 @@ document.addEventListener("input",e=>{if(e.target.id=="q")drawExp()});document.a
 const root=document.documentElement;
 try{if(location.search.includes("light")||localStorage.getItem("cpdfir-theme")=="light")root.classList.add("light")}catch(e){if(location.search.includes("light"))root.classList.add("light")}
 $("#theme").onclick=()=>{root.classList.toggle("light");try{localStorage.setItem("cpdfir-theme",root.classList.contains("light")?"light":"dark")}catch(e){}};
+if(window.self===window.top&&!location.search.includes("standalone")){location.replace("./#/results/"+((location.hash||"#overview").slice(1)))}
 if(location.search.includes("embed")||window.self!==window.top){root.classList.add("embed");addEventListener("message",e=>{if(e.data&&e.data.cpdfirTheme)root.classList.toggle("light",e.data.cpdfirTheme=="light")})}
 go();
 </script></body></html>
