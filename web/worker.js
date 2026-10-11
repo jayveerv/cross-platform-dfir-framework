@@ -70,10 +70,11 @@ async function init() {
   py = await loadPyodide({indexURL: PYODIDE});
   status("Loading the framework modules ...");
   const base = new URL("../py/", self.location.href).href;
-  const man = await (await fetch(base + "manifest.json", {cache: "no-cache"})).json();
-  for (const w of man.wheels) py.unpackArchive(new Uint8Array(await (await fetch(base + w)).arrayBuffer()), "wheel");
+  const V = PARAMS.get("v") ? "?v=" + PARAMS.get("v") : "";
+  const man = await (await fetch(base + "manifest.json" + V, {cache: "no-cache"})).json();
+  for (const w of man.wheels) py.unpackArchive(new Uint8Array(await (await fetch(base + w + V)).arrayBuffer()), "wheel");
   py.FS.mkdirTree("/app");
-  for (const m of man.modules) py.FS.writeFile("/app/" + m.split("/").pop(), new Uint8Array(await (await fetch(base + m, {cache: "no-cache"})).arrayBuffer()));
+  for (const m of man.modules) py.FS.writeFile("/app/" + m.split("/").pop(), new Uint8Array(await (await fetch(base + m + V, {cache: "no-cache"})).arrayBuffer()));
   py.runPython(BOOT);
   self.postMessage({type: "ready", info: JSON.parse(py.globals.get("api_info")())});
 }

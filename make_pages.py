@@ -27,7 +27,7 @@ INDEX = """<!doctype html>
 <title>CP-DFIR Console</title>
 <meta name="description" content="Cross-Platform DFIR Framework: upload Windows, Linux and AWS logs and investigate them in the browser. The framework's Python code runs locally with WebAssembly; evidence never leaves the computer.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z' fill='%2322D3EE'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="web/console.css">
+<link rel="stylesheet" href="web/console.css?v=__V__">
 <script>window.CPDFIR_MODE = "browser";</script>
 </head>
 <body>
@@ -47,7 +47,7 @@ INDEX = """<!doctype html>
   <main id="view"></main>
 </div>
 <div id="toast"></div>
-<script src="web/console.js"></script>
+<script src="web/console.js?v=__V__"></script>
 </body>
 </html>
 """
@@ -67,8 +67,12 @@ def build():
     with open(os.path.join(DOCS, "py", "manifest.json"), "w") as f:
         json.dump({"modules": [m + ".py" for m in MODULES] + ["vendor/" + e for e in extra],
                    "wheels": ["vendor/" + w for w in wheels]}, f, indent=1)
+    import hashlib
+    ver = hashlib.sha256(b"".join(open(os.path.join(ROOT, "web", x), "rb").read() for x in ("console.css", "console.js", "worker.js"))
+                         + json.dumps(json.load(open(os.path.join(DOCS, "py", "manifest.json")))).encode()
+                         + b"".join(open(os.path.join(ROOT, m + ".py"), "rb").read() for m in MODULES)).hexdigest()[:10]
     with open(os.path.join(DOCS, "index.html"), "w", encoding="utf-8") as f:
-        f.write(INDEX)
+        f.write(INDEX.replace("__V__", ver))     # new file names on every change, so browsers never mix old and new files
     dash = os.path.join(ROOT, "results", "dashboard.html")
     if os.path.exists(dash):
         shutil.copy2(dash, os.path.join(DOCS, "dashboard.html"))

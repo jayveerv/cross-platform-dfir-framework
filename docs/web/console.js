@@ -18,7 +18,8 @@ const B = (() => {
   let seq = 0, readyRes, readyRej, info = null;
   const pend = {}, JOBS = {}, Q = {}, blobs = {};
   const ready = new Promise((res, rej) => { readyRes = res; readyRej = rej; });
-  const w = new Worker("web/worker.js" + location.search);
+  const ver = (document.currentScript && new URL(document.currentScript.src).searchParams.get("v")) || "";
+  const w = new Worker("web/worker.js?" + new URLSearchParams(Object.assign(Object.fromEntries(new URLSearchParams(location.search)), ver ? {v: ver} : {})));
   const setStatus = (msg, cls) => { const e = $("#engine"); if (e) { e.textContent = msg; e.className = "chip " + (cls||"warn"); } };
   w.onmessage = ev => {
     const d = ev.data;
