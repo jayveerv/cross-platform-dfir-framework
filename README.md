@@ -9,7 +9,8 @@ Parul Institute of Engineering & Technology (PIET), Parul University
 
 **Jayveer Vasava** (2503032330032) · Guide: Dr. Ankita Gandhi · Co-guide: Dr. Kruti Kamal Sutaria
 
-[**▶ Live investigation console**](https://jayveerv.github.io/cross-platform-dfir-framework/) ·
+[**▶ Live console — upload logs and investigate in the browser**](https://jayveerv.github.io/cross-platform-dfir-framework/) ·
+[Evaluation dashboard](https://jayveerv.github.io/cross-platform-dfir-framework/dashboard.html) ·
 [Sample forensic report](https://jayveerv.github.io/cross-platform-dfir-framework/report_S1.html) ·
 [How to run](#how-to-run)
 
@@ -44,7 +45,7 @@ events into incidents through an entity graph, maps every finding to **MITRE ATT
 
 All results are shown in one offline page, organised around the title of the work:
 collection, cross-platform correlation, cloud forensics, chain of custody, ATT&CK coverage, scalability and
-validation on real data. **[Open it live →](https://jayveerv.github.io/cross-platform-dfir-framework/)**
+validation on real data. **[Open it live →](https://jayveerv.github.io/cross-platform-dfir-framework/dashboard.html)**
 
 <p align="center"><img src="docs/images/console.png" width="900" alt="Investigation console: mission control"></p>
 
@@ -55,6 +56,12 @@ validation on real data. **[Open it live →](https://jayveerv.github.io/cross-p
 | <img src="docs/images/dashboard_custody.png" alt="Hash-chain ledger and tampering tests"> | <img src="docs/images/dashboard_cloud.png" alt="AWS posture checks"> |
 
 ## Web console: upload evidence and investigate
+
+**[Try it live →](https://jayveerv.github.io/cross-platform-dfir-framework/)** No installation: the page loads the
+framework's own Python modules into the browser with [Pyodide](https://pyodide.org) (CPython compiled to
+WebAssembly) and runs the same intake → normalization → correlation → chain-of-custody → report pipeline there.
+**Evidence files are never uploaded**; they are analysed on the visitor's computer. Live triage, the INPUT folder
+and AWS collection read a real computer or AWS account, so they are only in the desktop version below.
 
 `start_web.bat` (or `python main.py web`) starts a local web application on **http://127.0.0.1:8765**
 (this computer only; nothing leaves the machine). The investigator does not rename files or type paths:
@@ -145,7 +152,7 @@ python main.py triage                     # live evidence from this computer
 python main.py verify --case cases/DEMO   # re-verify the chain of custody
 
 pip install -r requirements-dev.txt       # adds moto and freezegun
-python main.py selftest                   # 53 automated tests
+python main.py selftest                   # 54 automated tests
 ```
 
 ## Repository layout
@@ -167,10 +174,12 @@ evaluate.py          scenarios S1-S5, tamper tests, ablation, scalability
 generate_data.py     simulated attacks with ground truth
 realdata.py          validation on public datasets
 cloud_emulation.py   AWS tests on the moto emulator
-tests/               53 automated tests
+tests/               54 automated tests
 INPUT/               drop folder for "python main.py inbox"
 results/             evaluation output used in the dissertation
-docs/                live console (GitHub Pages) and images
+casestore.py         case operations shared by the desktop and the in-browser console
+make_pages.py        builds docs/ (GitHub Pages): the console running the framework in the browser
+docs/                in-browser console (index.html), evaluation dashboard, sample report, images
 ```
 
 17 Python modules (6,144 lines) plus the web console (HTML/CSS/JS, 584 lines); standard library plus `networkx`, `python-evtx`, `boto3`, `psutil` and `flask`.

@@ -1,0 +1,19 @@
+{
+ "modules": [
+  "config.py",
+  "normalize.py",
+  "correlate.py",
+  "custody.py",
+  "collect.py",
+  "pipeline.py",
+  "report.py",
+  "intake.py",
+  "generate_data.py",
+  "casestore.py",
+  "vendor/hexdump.py"
+ ],
+ "wheels": [
+  "vendor/networkx-3.3-py3-none-any.whl",
+  "vendor/python_evtx-0.8.1-py3-none-any.whl"
+ ]
+}

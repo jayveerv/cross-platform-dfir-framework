@@ -8,8 +8,105 @@ const plat = p => `<span class="plat" style="--pc:${PC[p]||"var(--mu)"}">${esc(P
 const sev = s => `<span class="badge b-${esc(String(s||"none").toLowerCase())}">${esc(s||"None")}</span>`;
 const fmtB = n => n==null ? "" : n<1024 ? n+" B" : n<1048576 ? (n/1024).toFixed(1)+" KB" : (n/1048576).toFixed(1)+" MB";
 let INFO = {}, CUR = null, PICKED = [];
+const MODE = window.CPDFIR_MODE || "local";          // "local" = Flask server, "browser" = GitHub Pages + Pyodide
+const REPO = "https://github.com/jayveerv/cross-platform-dfir-framework";
+const DASH = MODE === "browser" ? "dashboard.html" : "/dashboard";
+
+// ------------------------------------------------------------------ in-browser backend (Pyodide worker)
+const B = (() => {
+  if (MODE !== "browser") return null;
+  let seq = 0, readyRes, readyRej, info = null;
+  const pend = {}, JOBS = {}, Q = {}, blobs = {};
+  const ready = new Promise((res, rej) => { readyRes = res; readyRej = rej; });
+  const w = new Worker("web/worker.js" + location.search);
+  const setStatus = (msg, cls) => { const e = $("#engine"); if (e) { e.textContent = msg; e.className = "chip " + (cls||"warn"); } };
+  w.onmessage = ev => {
+    const d = ev.data;
+    if (d.type === "status") return setStatus(d.msg);
+    if (d.type === "ready") { info = d.info; setStatus(`Python ${d.info.python} engine ready · runs in your browser`, "ok"); return readyRes(d.info); }
+    if (d.type === "fatal") { setStatus("Engine failed to load", "warn"); toast("The Python engine could not load: " + d.msg, true); return readyRej(new Error(d.msg)); }
+    if (d.job) { (Q[d.job] = Q[d.job] || []).push(d); return; }
+    const p = pend[d.id]; if (!p) return; delete pend[d.id];
+    d.ok ? p.res(d.result) : p.rej(new Error(d.error));
+  };
+  const call = (cmd, args, transfer) => new Promise((res, rej) => { const id = ++seq; pend[id] = {res, rej}; w.postMessage({id, cmd, args}, transfer || []); });
+  // job events arrive in a burst; show them at a readable pace (display only, the analysis itself is already done)
+  setInterval(() => {
+    for (const [jid, q] of Object.entries(Q)) {
+      const j = JOBS[jid]; if (!j || !q.length) continue;
+      const d = q.shift(), now = Date.now();
+      if (d.type === "log") j.log.push({t: new Date().toTimeString().slice(0,8), msg: d.msg});
+      if (d.type === "files") j.files = d.files;
+      if (d.type === "stage") { if (j.stage !== d.stage && !j.stages_done.includes(j.stage)) j.stages_done.push(j.stage); j.stage = d.stage; }
+      if (d.type === "done") { Object.assign(j, {state: "done", stage: "done", case: d.case, finished: now, stages_done: ["intake","acquisition","normalization","correlation","custody","reporting","done"]}); }
+      if (d.type === "error") { Object.assign(j, {state: "error", error: d.error, finished: now}); j.log.push({t: new Date().toTimeString().slice(0,8), msg: "ERROR: " + d.error}); }
+    }
+  }, 140);
+  const safe = n => (String(n||"").trim().replace(/[^A-Za-z0-9_.-]+/g, "-").replace(/^[-.]+|[-.]+$/g, "").slice(0, 60)) || ("CASE-" + new Date().toISOString().slice(0,19).replace(/[-:T]/g, ""));
+  function job(kind, kase, form, files) {
+    const jid = Math.random().toString(16).slice(2, 14);
+    JOBS[jid] = {id: jid, kind, case: kase, state: "running", stage: "intake", stages_done: [], log: [], files: [], error: null, started: Date.now(), finished: null};
+    const transfer = files ? files.map(f => f.data) : [];
+    ready.then(() => call("job", {jid, kind, case: kase, form, files}, transfer)).catch(e => {
+      if (!(Q[jid]||[]).some(x => x.type === "error")) (Q[jid] = Q[jid] || []).push({type: "error", error: e.message});
+    });
+    return {job: jid, case: kase};
+  }
+  async function handle(url, opt) {
+    const u = new URL(url, location.href), p = u.pathname.replace(/^.*?\/api\//, "/api/"), m = (opt && opt.method) || "GET";
+    const body = opt && opt.body ? JSON.parse(opt.body) : {};
+    let r;
+    if (p === "/api/info") return info || await ready;
+    if (r = p.match(/^\/api\/jobs\/(\w+)$/)) { const j = JOBS[r[1]]; if (!j) throw new Error("job not found"); return Object.assign({}, j, {elapsed: (((j.finished || Date.now()) - j.started) / 1000).toFixed(1)}); }
+    await ready;
+    if (p === "/api/cases") return call("list");
+    if (r = p.match(/^\/api\/cases\/([^/]+)\/events$/)) return call("events", {name: decodeURIComponent(r[1]), q: u.searchParams.get("q"), source: u.searchParams.get("source"), alerts: u.searchParams.get("alerts") === "1"});
+    if (r = p.match(/^\/api\/cases\/([^/]+)\/verify$/)) return call("verify", {name: decodeURIComponent(r[1]), anchor: body.anchor});
+    if (r = p.match(/^\/api\/cases\/([^/]+)\/tamper$/)) return call("tamper", {name: decodeURIComponent(r[1]), what: body.what});
+    if (r = p.match(/^\/api\/cases\/([^/]+)$/)) return call("detail", {name: decodeURIComponent(r[1])});
+    if (p === "/api/sample") return job("sample", safe(body.case_name || "SAMPLE-" + body.scenario), body);
+    throw new Error("This action needs the desktop version (start_web.bat): live triage, INPUT folder and AWS collection read your own computer.");
+  }
+  async function upload(picked, form) {
+    const files = [];
+    for (const [f, path] of picked) files.push({path, data: await f.arrayBuffer()});
+    return job("upload", safe(form.case_name), form, files);
+  }
+  async function fileURL(name, f, type) {
+    const k = name + "/" + f;
+    if (!blobs[k]) blobs[k] = URL.createObjectURL(new Blob([await call("file", {name, f})], {type}));
+    return blobs[k];
+  }
+  function dropCase(name) { for (const k of Object.keys(blobs)) if (k.startsWith(name + "/")) { URL.revokeObjectURL(blobs[k]); delete blobs[k]; } }
+  async function downloadZip(name) {
+    const url = URL.createObjectURL(new Blob([await call("zip", {name})], {type: "application/zip"}));
+    const a = Object.assign(document.createElement("a"), {href: url, download: name + ".zip"}); document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  }
+  return {handle, upload, fileURL, downloadZip, dropCase, ready};
+})();
+
+// links to a case's files: real URLs on the local server, blob URLs made by the in-browser engine on GitHub Pages
+function caseButtons(name, report) {
+  const n = encodeURIComponent(name);
+  if (MODE !== "browser")
+    return `${report?`<a class="btn pri" href="/cases/${n}/report.html" target="_blank" rel="noopener">Full forensic report ↗</a>`:""}
+      <a class="btn" href="/cases/${n}/timeline.csv">Timeline CSV</a><a class="btn" href="/api/cases/${n}/download">Download case .zip</a>`;
+  return `<a class="btn pri" data-blob="report.html" data-type="text/html" target="_blank" rel="noopener" href="#">Full forensic report ↗</a>
+      <a class="btn" data-blob="timeline.csv" data-type="text/csv" download="${esc(name)}_timeline.csv" href="#">Timeline CSV</a><a class="btn" data-zip="1" href="#">Download case .zip</a>`;
+}
+async function wireCaseButtons(name, root) {
+  if (MODE !== "browser") return;
+  B.dropCase(name);
+  for (const a of (root || document).querySelectorAll("a[data-blob]")) {
+    a.style.opacity = .5;
+    try { a.href = await B.fileURL(name, a.dataset.blob, a.dataset.type); a.style.opacity = ""; } catch (e) { a.title = e.message; }
+  }
+  for (const a of (root || document).querySelectorAll("a[data-zip]")) a.onclick = e => { e.preventDefault(); B.downloadZip(name).catch(x => toast(x.message, true)); };
+}
 
 async function api(url, opt) {
+  if (MODE === "browser") return B.handle(url, opt);
   const r = await fetch(url, opt);
   const t = await r.text();
   let j; try { j = JSON.parse(t); } catch { j = {error: t.slice(0, 300)}; }
@@ -49,6 +146,16 @@ async function route() {
 window.addEventListener("hashchange", route);
 
 async function boot() {
+  if (MODE === "browser") {
+    $("#chips").innerHTML = `<span class="chip warn" id="engine">Starting the Python engine ...</span><span class="chip ok">Evidence never leaves this computer</span>`;
+    $("#who").innerHTML = `<b>Jayveer Vasava</b>M.Tech CSE (Cyber Security)<br>PIET, Parul University<br><span class="mono">framework running in your browser</span>`;
+    route();
+    try { INFO = await api("/api/info"); } catch (e) { INFO = {}; }
+    $("#chips").insertAdjacentHTML("beforeend", `<span class="chip ok">${esc(INFO.rules||57)} rules · ${esc(INFO.techniques||"")} ATT&CK techniques</span>`);
+    if (location.hash.replace(/^#\/?/, "").startsWith("new") || !location.hash) route();
+    refreshCount();
+    return;
+  }
   try { INFO = await api("/api/info"); } catch (e) { INFO = {}; }
   $("#chips").innerHTML =
     `<span class="chip">${esc(INFO.host||"")}</span>` +
@@ -103,14 +210,20 @@ function viewNew() {
       <h2>2 · Or collect / use evidence from here</h2>
       <div class="opt"><div class="ic">⚔</div><div style="flex:1"><b>Built-in attack scenario</b><p>Generates realistic Windows + Linux + AWS logs of a known attack and investigates them. Good for the demo.</p>
         <select id="scen">${sc}</select><div class="row" style="margin-top:8px"><button class="btn sm" id="runsc">Run scenario</button></div></div></div>
-      <div class="opt"><div class="ic">📂</div><div style="flex:1"><b>INPUT folder</b><p>Copy logs into <span class="mono">${esc(INFO.inbox_path||"INPUT")}</span> with Explorer, then analyse them all at once.</p>
+${MODE === "browser" ? `      <div class="opt"><div class="ic">🔒</div><div style="flex:1"><b>Runs entirely in your browser</b><p>This page loads the framework's own Python code (the same <span class="mono">intake.py</span>, <span class="mono">normalize.py</span>, <span class="mono">correlate.py</span>, <span class="mono">custody.py</span> …) into the browser with WebAssembly. Your log files are analysed here and are <b style="display:inline;color:var(--gr)">never uploaded</b> anywhere. Cases stay in this tab — download the .zip to keep one.</p></div></div>
+      <div class="opt"><div class="ic">🖥</div><div style="flex:1"><b>Live triage, INPUT folder, AWS collection</b><p>These read evidence directly from a computer or an AWS account, so they need the desktop version: download the repository and double-click <span class="mono">start_web.bat</span>.</p>
+        <div class="row"><a class="btn sm" href="${REPO}" target="_blank" rel="noopener">GitHub repository ↗</a><a class="btn sm" href="${REPO}/archive/refs/heads/main.zip">Download desktop version (.zip)</a></div></div></div>
+      <div class="opt"><div class="ic">📊</div><div style="flex:1"><b>Framework evaluation</b><p>Accuracy on S1–S5, 25/25 tamper tests, AWS checks, scalability to 100,000 records and validation on real public data.</p>
+        <div class="row"><a class="btn sm" href="${DASH}" target="_blank" rel="noopener">Open evaluation dashboard ↗</a></div></div></div>
+` : `      <div class="opt"><div class="ic">📂</div><div style="flex:1"><b>INPUT folder</b><p>Copy logs into <span class="mono">${esc(INFO.inbox_path||"INPUT")}</span> with Explorer, then analyse them all at once.</p>
         <div class="small muted">${inbox.length ? `${inbox.length} item(s) waiting: ${inbox.slice(0,4).map(esc).join(", ")}${inbox.length>4?" …":""}` : "Folder is empty right now."}</div>
         <div class="row" style="margin-top:8px"><button class="btn sm" id="runin" ${inbox.length?"":"disabled"}>Analyse INPUT folder</button><button class="btn sm" id="rein">Refresh</button></div></div></div>
       <div class="opt"><div class="ic">🖥</div><div style="flex:1"><b>Triage this computer (live)</b><p>Collects live evidence from <span class="mono" style="color:var(--tx)">${esc(INFO.host||"this computer")}</span>: running processes, network connections, accounts, startup / scheduled-task persistence, recent files and security logs — then analyses it.</p>
         ${INFO.admin?"":`<div class="small" style="color:var(--am)">Not running as Administrator: some evidence (Security log, other users' processes) will be limited. Start the console with “Run as administrator” for a full triage.</div>`}
         <div class="row" style="margin-top:8px"><button class="btn sm" id="runtr">Start live triage</button></div></div></div>
       <div class="opt"><div class="ic">📊</div><div style="flex:1"><b>Framework evaluation</b><p>Re-runs accuracy (S1–S5), tamper tests, cloud checks and scalability, then rebuilds the evaluation dashboard.</p>
-        <div class="row"><button class="btn sm" id="runev">Run evaluation (~1-2 min)</button><a class="btn sm" href="/dashboard" target="_blank" rel="noopener">Open dashboard ↗</a></div></div></div>
+        <div class="row"><button class="btn sm" id="runev">Run evaluation (~1-2 min)</button><a class="btn sm" href="${DASH}" target="_blank" rel="noopener">Open dashboard ↗</a></div></div></div>
+`}
     </div>
   </div>
   <div class="card help">
@@ -138,10 +251,12 @@ function viewNew() {
   };
   $("#go").onclick = startUpload;
   $("#runsc").onclick = () => startJob(post("/api/sample", {scenario:$("#scen").value, investigator:$("#inv").value}));
-  $("#runin").onclick = () => startJob(post("/api/inbox", formVals()));
-  $("#rein").onclick = async () => { INFO = await api("/api/info"); viewNew(); };
-  $("#runtr").onclick = () => startJob(post("/api/triage", {investigator:$("#inv").value}));
-  $("#runev").onclick = () => startJob(post("/api/evaluate", {}));
+  if (MODE !== "browser") {
+    $("#runin").onclick = () => startJob(post("/api/inbox", formVals()));
+    $("#rein").onclick = async () => { INFO = await api("/api/info"); viewNew(); };
+    $("#runtr").onclick = () => startJob(post("/api/triage", {investigator:$("#inv").value}));
+    $("#runev").onclick = () => startJob(post("/api/evaluate", {}));
+  }
   PICKED = []; renderPicked();
 }
 function walk(entry, path, out) {
@@ -168,13 +283,17 @@ function renderPicked() {
     <div class="small muted" style="margin-top:6px">${PICKED.length} file(s), ${fmtB(total)}</div>` : "";
   document.querySelectorAll("[data-rm]").forEach(a => a.onclick = e => { e.preventDefault(); PICKED.splice(+a.dataset.rm, 1); renderPicked(); });
   $("#go").disabled = !PICKED.length;
-  $("#gohint").textContent = PICKED.length ? "Files are recognised by content on the server" : "Add at least one file";
+  $("#gohint").textContent = PICKED.length ? (MODE === "browser" ? "Files are recognised by content, here in your browser" : "Files are recognised by content on the server") : "Add at least one file";
 }
 function formVals() {
   const g = id => ($("#"+id)||{}).value || "";
   return {case_name:g("cname"), investigator:g("inv"), tz:g("tz"), year:g("yr"), internal_ranges:g("nets"), credentials:g("creds")};
 }
 async function startUpload() {
+  if (MODE === "browser") {
+    $("#go").disabled = true; $("#gohint").innerHTML = `<span class="spin"></span> Reading ${PICKED.length} file(s)…`;
+    return startJob(B.upload(PICKED, formVals()));
+  }
   const fd = new FormData();
   for (const [f, p] of PICKED) { fd.append("files", f, f.name); fd.append("paths", p); }
   for (const [k, v] of Object.entries(formVals())) fd.append(k, v);
@@ -222,9 +341,11 @@ function viewJob(id) {
       if (j.state === "done") {
         $("#jt").textContent = j.kind === "evaluate" ? "Evaluation finished" : "Investigation complete";
         $("#jl").textContent = `Finished in ${j.elapsed} s.`;
-        $("#jbtn").innerHTML = j.case ? `<a class="btn pri" href="#/case/${encodeURIComponent(j.case)}">Open case ${esc(j.case)} →</a><a class="btn" href="/cases/${encodeURIComponent(j.case)}/report.html" target="_blank" rel="noopener">Full forensic report ↗</a>`
-                                      : `<a class="btn pri" href="/dashboard" target="_blank" rel="noopener">Open evaluation dashboard ↗</a>`;
+        $("#jbtn").innerHTML = j.case ? `<a class="btn pri" href="#/case/${encodeURIComponent(j.case)}">Open case ${esc(j.case)} →</a>${caseButtons(j.case, true).replace("btn pri", "btn")}`
+                                      : `<a class="btn pri" href="${DASH}" target="_blank" rel="noopener">Open evaluation dashboard ↗</a>`;
+        if (j.case) wireCaseButtons(j.case, $("#jbtn"));
         refreshCount();
+        CUR = null;
         if (j.case) setTimeout(() => { if (location.hash === "#/job/" + id) location.hash = "#/case/" + encodeURIComponent(j.case); }, 1800);
       } else {
         $("#jt").textContent = "Investigation stopped"; $("#jl").innerHTML = `<span style="color:var(--rd)">${esc(j.error)}</span>`;
@@ -245,7 +366,7 @@ function filesTable(files, compact) {
 async function viewCases() {
   $("#casenav").innerHTML = "";
   const cs = await api("/api/cases");
-  $("#view").innerHTML = `<h1>Cases</h1><p class="lead">Every investigation is kept in its own folder under <span class="mono">cases/</span> with the evidence copy, normalized events, incidents, timeline, custody ledger and report.</p>
+  $("#view").innerHTML = `<h1>Cases</h1><p class="lead">${MODE === "browser" ? "Investigations made on this page are kept in this browser tab (nothing is uploaded). Each case has the evidence copy, normalized events, incidents, timeline, custody ledger and report — download the case .zip to keep it." : "Every investigation is kept in its own folder under <span class=\"mono\">cases/</span> with the evidence copy, normalized events, incidents, timeline, custody ledger and report."}</p>
   <div class="card" style="padding:0">${cs.length ? `<div class="tw" style="border:0"><table><tr><th>Case</th><th>Created</th><th>Severity</th><th>Incidents</th><th>Alerts</th><th>Platforms in incidents</th><th></th></tr>
   ${cs.map(c => `<tr class="click" data-c="${esc(c.name)}"><td><b>${esc(c.name)}</b></td><td class="mono small">${esc(c.created)}</td><td>${sev(c.severity)}</td><td class="mono">${c.incidents}</td><td class="mono">${c.alerts}</td><td>${c.platforms.map(plat).join("")}</td><td><a href="#/case/${encodeURIComponent(c.name)}">Open →</a></td></tr>`).join("")}
   </table></div>` : `<div class="empty">No cases yet. <a href="#/new">Start a new investigation</a>.</div>`}</div>`;
@@ -261,18 +382,18 @@ async function viewCase(name, tab) {
   $("#view").innerHTML = `
   <div class="casehead"><div><div class="small muted">CASE</div><h1>${esc(name)}</h1>
     <div class="row small muted">${sev(b.severity)} <span>created ${esc(b.created)}</span> ${c.custody.ok ? `<span class="badge b-ok">Custody verified</span>` : `<span class="badge b-fail">Custody FAILED</span>`} ${c.custody.hmac?`<span class="badge b-ok">HMAC signed</span>`:""}</div></div>
-    <div class="row">${c.report?`<a class="btn pri" href="/cases/${encodeURIComponent(name)}/report.html" target="_blank" rel="noopener">Full forensic report ↗</a>`:""}
-      <a class="btn" href="/cases/${encodeURIComponent(name)}/timeline.csv">Timeline CSV</a><a class="btn" href="/api/cases/${encodeURIComponent(name)}/download">Download case .zip</a></div></div>
+    <div class="row">${caseButtons(name, c.report)}</div></div>
   <div class="tabs">${TABS.map(([k,t]) => `<a class="${k===tab?"on":""}" href="#/case/${encodeURIComponent(name)}/${k}">${t}</a>`).join("")}</div>
   <div id="tab"></div>`;
   ({overview:tOverview, incidents:tIncidents, evidence:tEvidence, custody:tCustody, events:tEvents}[tab] || tOverview)(c);
+  wireCaseButtons(name, $(".casehead"));
 }
 function kpi(v, l, c) { return `<div class="card kpi" style="--c:${c||"var(--tx)"}"><div class="v">${esc(v)}</div><div class="l">${l}</div></div>`; }
 function tOverview(c) {
   const srcs = Object.entries(c.per_source).sort((a,b) => b[1]-a[1]), mx = Math.max(1, ...srcs.map(x => x[1]));
   const rules = Object.entries(c.rules).sort((a,b) => b[1].count - a[1].count);
   const verdict = c.incidents.length
-    ? `<b style="color:var(--rd)">${c.incidents.length} incident(s) found.</b> ${c.incidents.filter(i=>i.cross_platform).length} of them span more than one platform. ${c.alert_events} of ${c.total_events} events raised alerts mapped to ${c.techniques.length} MITRE ATT&CK technique(s).`
+    ? `<b style="color:var(--rd)">${c.incidents.length} incident(s) found.</b> ${(n => n === 1 ? (c.incidents.length === 1 ? "It spans" : "1 of them spans") : `${n} of them span`)(c.incidents.filter(i=>i.cross_platform).length)} more than one platform. ${c.alert_events} of ${c.total_events} events raised alerts mapped to ${c.techniques.length} MITRE ATT&CK technique(s).`
     : c.alert_events ? `<b style="color:var(--am)">No incident</b>, but ${c.alert_events} alert(s) / posture findings were raised — see Events.`
     : `<b style="color:var(--gr)">No attack activity found.</b> ${c.total_events} events were analysed and none matched the 57 detection rules.`;
   $("#tab").innerHTML = `

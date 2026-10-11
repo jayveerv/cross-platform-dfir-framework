@@ -11,6 +11,15 @@ timeline me jodta hai, aur har step ka hash-based chain of custody rakhta hai.
 
 ---
 
+## ★ Live link (bina install ke): https://jayveerv.github.io/cross-platform-dfir-framework/
+
+Ye link kholo, log files drag & drop karo, analysis **browser me hi** hota hai: framework ka wahi Python code
+(Pyodide / WebAssembly se) visitor ke computer par chalta hai, files kahin upload nahi hoti. Pehli baar Python engine
+load hone me ~10 second lagte hain (upar chip "engine ready" dikhegi). Built-in scenarios S1–S5, kill chain, entity graph,
+custody re-verify, tamper test, report / CSV / .zip download — sab chalta hai. Purana evaluation dashboard ab
+`/dashboard.html` par hai. Live triage, INPUT folder aur AWS collection ke liye desktop version (neeche) chahiye.
+`docs/` dobara banane ke liye: `python make_pages.py`.
+
 ## ★ Web Console (naya, 11 Oct 2026) — framework ko asli software ki tarah chalao
 
 **`start_web.bat`** par double-click karo (ya `run.bat` → **W**). Browser me **http://127.0.0.1:8765** khulta hai.
@@ -79,7 +88,7 @@ Upar ◐ button se light theme. Kisi section ko seedha kholna ho to `dashboard.h
 | 5 | **Apni logs analyze karo** |
 | 6 | Is laptop ka Windows Security log export karo (**Run as Administrator**) |
 | 7 | AWS CloudTrail events **aur account state** (IAM, access keys, S3, security groups) kheecho (AWS credentials chahiye) |
-| 8 | Unit tests (53 tests) |
+| 8 | Unit tests (54 tests) |
 | 9 | **TRIAGE**: is laptop ka live evidence (processes, sockets, accounts, persistence, files, logs) collect karo, analyze karo, report banao |
 
 Command line: `python main.py web | inbox | triage | collect-host | demo | evaluate | real-eval | tamper-demo | analyze --input DIR | collect-live | collect-aws | collect-linux | verify --case DIR | selftest`
@@ -99,7 +108,7 @@ Command line: `python main.py web | inbox | triage | collect-host | demo | evalu
 | Evaluation | `evaluate.py`, `generate_data.py` | Simulated scenarios + ground truth, tampering tests, scalability |
 | **Real-data validation** | `realdata.py` | **Asli** public logs par test (section 4) |
 | **Web Console** | **`webapp.py`, `web/`** | Local web app (Flask, 127.0.0.1): upload, live pipeline progress, cases, kill chain, entity graph, custody re-verify, tamper test, export |
-| Tests | `tests/` | 53 tests (7 naye: intake + web console): asli processes/sockets (Linux), AWS collectors (botocore Stubber, AWS service model se validated), SSH collector (fake runner), parsers, rules, custody |
+| Tests | `tests/` | 54 tests (8 naye: intake, web console, GitHub Pages sync): asli processes/sockets (Linux), AWS collectors (botocore Stubber, AWS service model se validated), SSH collector (fake runner), parsers, rules, custody |
 
 **Supported inputs**
 - **Windows:** `wevtutil` XML export ya binary **`.evtx`**. Security (4624, 4625, 4634, 4672, 4688, 4698, 4720, 4732, 5145, 1102), System (7045, 104), **Sysmon (1, 3, 10, 13)**, PowerShell 4104

@@ -152,5 +152,21 @@ class WebConsoleTests(unittest.TestCase):
         self.assertEqual(self.c.get("/cases/WEB-T1/../../webapp.py").status_code, 404)
 
 
+class PagesInSyncTests(unittest.TestCase):
+    """docs/ (GitHub Pages, in-browser console) must run exactly the same framework code as the repository."""
+
+    def test_browser_copies_are_identical(self):
+        import make_pages
+        for m in make_pages.MODULES:
+            self.assertEqual(open(os.path.join(ROOT, m + ".py"), "rb").read(),
+                             open(os.path.join(ROOT, "docs", "py", m + ".py"), "rb").read(), m + ".py differs: run make_pages.py")
+        for f in ("console.js", "console.css", "worker.js"):
+            self.assertEqual(open(os.path.join(ROOT, "web", f), "rb").read(),
+                             open(os.path.join(ROOT, "docs", "web", f), "rb").read(), f + " differs: run make_pages.py")
+        man = json.load(open(os.path.join(ROOT, "docs", "py", "manifest.json")))
+        for f in man["modules"] + man["wheels"]:
+            self.assertTrue(os.path.exists(os.path.join(ROOT, "docs", "py", f)), f)
+
+
 if __name__ == "__main__":
     unittest.main()
