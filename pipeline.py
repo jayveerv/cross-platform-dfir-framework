@@ -27,14 +27,19 @@ def _jsonable(events):
     return events
 
 
-def run_case(input_dir, case_dir, cfg=None, make_report=True, clean=True, key=None):
+def run_case(input_dir, case_dir, cfg=None, make_report=True, clean=True, key=None, intake=None, progress=None):
     """Run the whole framework on one folder of evidence.
 
     input_dir  folder with windows_security.xml / *.evtx, auth.log, cloudtrail.json, host/ and cloud/ (any subset)
     case_dir   output folder (evidence copy, ledger, timeline, incidents, report)
     cfg        case configuration (default: input_dir/case_config.json, else config.DEFAULT_CASE)
     key        HMAC key for the custody ledger (default: DFIR_CUSTODY_KEY environment variable, else plain hash chain)
+    intake     optional list of original files from intake.stage() (name, SHA-256, detected type); written to
+               intake_manifest.json and recorded as the first custody entry, so the hashes of the files exactly as
+               the investigator supplied them are part of the chain
+    progress   optional callback progress(stage, info) used by the web console to show live progress
     """
+    say = progress or (lambda *_a, **_k: None)
     if cfg is None:
         cfg = config.load_case_config(os.path.join(input_dir, "case_config.json"))
     else:
@@ -45,10 +50,20 @@ def run_case(input_dir, case_dir, cfg=None, make_report=True, clean=True, key=No
     ledger = CustodyLedger(os.path.join(case_dir, "custody_ledger.jsonl"), actor=cfg.get("investigator"), key=key)
     timings = {}
     t_all = time.perf_counter()
+    if intake:
+        p_in = os.path.join(case_dir, "intake_manifest.json")
+        with open(p_in, "w", encoding="utf-8") as f:
+            json.dump(intake, f, indent=1)
+        ledger.record("intake", p_in, stage="Acquisition",
+                      details={"original_files": len(intake), "recognised": sum(1 for r in intake if r.get("used"))})
 
+    say("acquisition", {})
     acquired, msgs = _timed(timings, "acquisition", collect.acquire, input_dir, case_dir, ledger)
+    say("normalization", {"files": len(acquired)})
     events, stats = _timed(timings, "normalization", normalize.normalize_case, os.path.join(case_dir, "evidence"), cfg)
+    say("correlation", {"events": len(events)})
     corr = _timed(timings, "correlation", correlate.correlate, events, cfg)
+    say("custody", {"alerts": corr["alert_events"], "incidents": len(corr["incidents"])})
 
     def _write_outputs():
         p_json = os.path.join(case_dir, "normalized_events.json")
@@ -75,6 +90,7 @@ def run_case(input_dir, case_dir, cfg=None, make_report=True, clean=True, key=No
     ctx = dict(cfg=cfg, acquired=acquired, acquire_msgs=msgs, stats=stats, events=events, corr=corr, custody_ok=ok,
                custody_checks=checks, head_hash=head, timings=timings, case_dir=case_dir, ledger=ledger, hmac_used=bool(ledger.key))
     if make_report:
+        say("reporting", {"custody_ok": ok})
         import report
         p = os.path.join(case_dir, "report.html")
         _timed(timings, "reporting", report.write_report, ctx, p)
@@ -84,4 +100,5 @@ def run_case(input_dir, case_dir, cfg=None, make_report=True, clean=True, key=No
     ctx["final_head_hash"] = ledger.entries[-1]["entry_hash"]
     with open(os.path.join(case_dir, "custody_head.txt"), "w") as f:
         f.write(ctx["final_head_hash"] + "\n")
+    say("done", {})
     return ctx

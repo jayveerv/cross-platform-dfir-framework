@@ -5,7 +5,7 @@ set PY=
 where python >nul 2>&1 && set PY=python
 if "%PY%"=="" where py >nul 2>&1 && set PY=py
 if "%PY%"=="" goto nopython
-%PY% -c "import networkx, Evtx, boto3, psutil" >nul 2>&1
+%PY% -c "import networkx, Evtx, boto3, psutil, flask" >nul 2>&1
 if errorlevel 1 (
   echo Zaroori packages install ho rahe hain. Ye sirf ek baar hoga, internet chahiye.
   %PY% -m pip install -r requirements.txt
@@ -15,11 +15,14 @@ cls
 echo ===================================================
 echo    Cross-Platform DFIR Framework
 echo ===================================================
+echo    W. WEB CONSOLE - browser me logs upload karo, live analysis (RECOMMENDED)
+echo    I. Analyse INPUT folder - files kisi bhi naam se INPUT folder me daalo
+echo.
 echo    1. Demo: simulated attack across Windows, Linux and AWS
 echo    2. Full evaluation on simulated scenarios, about 1 minute
 echo    3. Validation on REAL public data, downloads 44 MB first time, about 3 minutes
 echo    4. Tampering demo: for the viva
-echo    5. Analyse my own logs
+echo    5. Analyse my own logs (folder path, standard file names)
 echo    6. Export this laptop's Windows Security log, run as Administrator
 echo    7. Pull AWS CloudTrail events and account state, needs AWS credentials
 echo    8. Self-tests
@@ -27,6 +30,16 @@ echo    9. TRIAGE this laptop: collect live evidence, analyse, report
 echo    0. Exit
 echo.
 set /p c=Choice: 
+if /i "%c%"=="W" (
+  %PY% main.py web
+  pause
+  goto menu
+)
+if /i "%c%"=="I" (
+  %PY% main.py inbox
+  pause
+  goto menu
+)
 if "%c%"=="1" (
   %PY% main.py demo
   pause
@@ -56,7 +69,7 @@ if "%c%"=="5" (
 if "%c%"=="6" (
   %PY% main.py collect-live --out live_logs --fmt evtx
   echo.
-  echo Ab option 5 chalao aur folder me live_logs likho.
+  echo Ab option 5 chalao aur folder me live_logs likho - ya Web Console me live_logs folder drag karo.
   pause
   goto menu
 )
@@ -64,7 +77,7 @@ if "%c%"=="7" (
   set /p days=Kitne din ke events? 
   %PY% main.py collect-aws --out live_logs --days %days%
   echo.
-  echo Ab option 5 chalao aur folder me live_logs likho.
+  echo Ab option 5 chalao aur folder me live_logs likho - ya Web Console me live_logs folder drag karo.
   pause
   goto menu
 )

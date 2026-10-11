@@ -11,3 +11,6 @@ real_data/*
 sample_logs/*
 !sample_logs/S1/
 *.key
+uploads/
+INPUT/*
+!INPUT/README.txt

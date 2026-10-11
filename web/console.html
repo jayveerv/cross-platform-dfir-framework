@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CP-DFIR Console</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z' fill='%2322D3EE'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/web/console.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a class="brand" href="#/new">
+      <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span><b>CP-DFIR</b><small>Investigation Console</small></span>
+    </a>
+    <div class="title">A Scalable Cross-Platform DFIR Framework for Automated Evidence Collection, Correlation, and Cloud Forensic Investigation</div>
+    <div class="chips" id="chips"></div>
+    <button class="iconbtn" id="theme" title="Light / dark">◐</button>
+  </header>
+
+  <nav class="side">
+    <div class="grp">Investigate</div>
+    <a href="#/new" data-nav="new"><i>＋</i>New investigation</a>
+    <a href="#/cases" data-nav="cases"><i>▤</i>Cases <span class="cnt" id="ncases"></span></a>
+    <div id="casenav"></div>
+    <div class="grp">Framework</div>
+    <a href="#/about" data-nav="about"><i>◇</i>How it works</a>
+    <a href="/dashboard" target="_blank" rel="noopener"><i>◫</i>Evaluation dashboard ↗</a>
+    <div class="who" id="who"></div>
+  </nav>
+
+  <main id="view"></main>
+</div>
+<div id="toast"></div>
+<script src="/web/console.js"></script>
+</body>
+</html>

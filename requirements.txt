@@ -2,3 +2,4 @@ networkx>=3.0
 python-evtx>=0.8
 boto3>=1.28
 psutil>=5.9
+flask>=2.3

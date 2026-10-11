@@ -4,6 +4,8 @@
   python main.py evaluate [--quick]        all simulated scenarios, tampering tests, cloud checks, scalability -> results/
   python main.py real-eval                 validation on REAL public data (downloads ~44 MB the first time) -> results/
   python main.py tamper-demo               show tampering being detected (for the viva)
+  python main.py web                       WEB CONSOLE: upload logs with any name in the browser, live analysis, cases
+  python main.py inbox [--input DIR]       analyse every file put into the INPUT folder (any file names, .zip/.gz ok)
   python main.py analyze --input DIR       analyse your own evidence (windows_security.xml or *.evtx, auth.log, cloudtrail.json,
                                            host/ and cloud/ folders, optional case_config.json)
   python main.py triage                    collect live evidence from THIS computer, analyse it and open the report
@@ -161,6 +163,45 @@ def cmd_analyze(a):
     _open(ctx["report_path"], a.no_open)
 
 
+def cmd_inbox(a):
+    import intake
+    src = os.path.abspath(a.input or "INPUT")
+    os.makedirs(src, exist_ok=True)
+    names = [f for f in sorted(os.listdir(src)) if f.lower() != "readme.txt" and not f.startswith(".")]
+    if not names:
+        print(f"The folder is empty: {src}")
+        print("Put your log files there (any name: .evtx, .xml, auth.log, CloudTrail .json, or a .zip of them) and run again.")
+        return 1
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    name = a.name or f"INPUT-{stamp}"
+    staging = os.path.join("uploads", f"inbox_{stamp}")
+    print(f"Looking inside {len(names)} item(s) in {src} ...")
+    files = intake.stage([(os.path.join(src, f), f) for f in names], staging)
+    for r in files:
+        print(f"  {'OK ' if r['used'] else '-- '} {r['label']:<22} {r['name']}  ({r['reason']})")
+    if not any(r["used"] for r in files):
+        print("None of these files is Windows, Linux or AWS evidence.")
+        shutil.rmtree(staging, ignore_errors=True)
+        return 1
+    cfg = config.load_case_config(os.path.join(staging, "case_config.json"))
+    cfg["case_id"] = name
+    print("Running pipeline: acquire -> normalize -> correlate -> verify -> report ...")
+    ctx = pipeline.run_case(staging, os.path.join("cases", name), cfg, key=_key(a), intake=files)
+    shutil.rmtree(staging, ignore_errors=True)
+    _summary(ctx)
+    _open(ctx["report_path"], a.no_open)
+
+
+def cmd_web(a):
+    try:
+        import flask  # noqa: F401
+    except ImportError:
+        print("The web console needs the 'flask' package. Install the requirements once with:  pip install -r requirements.txt")
+        return 1
+    import webapp
+    webapp.serve(port=a.port, open_browser=not a.no_open)
+
+
 def _collect_host(out, a):
     import hostcollect
     os.makedirs(out, exist_ok=True)
@@ -288,6 +329,11 @@ def main():
         return p
 
     p_("demo", cmd_demo, key=True)
+    p = p_("web", cmd_web)
+    p.add_argument("--port", type=int, default=8765)
+    p = p_("inbox", cmd_inbox, key=True)
+    p.add_argument("--input", help="folder to analyse (default: INPUT)")
+    p.add_argument("--name", help="case name")
     p_("tamper-demo", cmd_tamper)
     p = p_("evaluate", cmd_evaluate)
     p.add_argument("--quick", action="store_true", help="scalability up to 10,000 records only")

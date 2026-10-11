@@ -54,6 +54,30 @@ validation on real data. **[Open it live →](https://jayveerv.github.io/cross-p
 | **Chain of custody** | **Cloud forensics (AWS)** |
 | <img src="docs/images/dashboard_custody.png" alt="Hash-chain ledger and tampering tests"> | <img src="docs/images/dashboard_cloud.png" alt="AWS posture checks"> |
 
+## Web console: upload evidence and investigate
+
+`start_web.bat` (or `python main.py web`) starts a local web application on **http://127.0.0.1:8765**
+(this computer only; nothing leaves the machine). The investigator does not rename files or type paths:
+
+- **Drag and drop** logs or a whole folder. Every file is recognised by its **content**, not its name
+  (EVTX signature, Windows event XML, Linux auth-log lines, CloudTrail records, host/cloud artefacts, `.zip`, `.gz`).
+  Unrecognised files are listed and left out.
+- Or run a **built-in attack scenario** (S1–S5), analyse everything in the **`INPUT/` folder**, or start a
+  **live triage** of the computer.
+- The pipeline runs **stage by stage on screen**: intake → acquisition → normalization → correlation → chain of custody → report.
+- Each case shows a verdict, the rules that fired, every incident's **timeline, kill chain and entity graph**, the
+  evidence with its SHA-256, a searchable event table, **re-verification** of the custody ledger and a
+  **tamper test on a copy** of the case. The HTML report, timeline CSV and the whole case (.zip) can be downloaded.
+
+The SHA-256 of every original file is written to `intake_manifest.json`, which becomes the **first entry of the
+custody ledger**, before the normal acquisition (hash before and after copying) runs.
+
+| Upload and choose a source | Pipeline running live |
+|---|---|
+| <img src="docs/images/web_new_investigation.png" alt="New investigation: drag and drop, scenarios, INPUT folder, live triage"> | <img src="docs/images/web_live_pipeline.png" alt="Stages running with live log and recognised evidence"> |
+| **Case overview** | **Incident: timeline, kill chain, entity graph** |
+| <img src="docs/images/web_case_overview.png" alt="Verdict, KPIs, rules fired"> | <img src="docs/images/web_incident.png" alt="Cross-platform incident with kill chain and linked entities"> |
+
 ## Results
 
 All numbers below are measured by `python main.py evaluate` and `python main.py real-eval`
@@ -89,9 +113,11 @@ AWS account.
 
 1. Install Python 3.10 or newer from [python.org](https://www.python.org/downloads/) (tick *Add Python to PATH*).
 2. Download this repository (**Code → Download ZIP**) and extract it.
-3. Double-click **`run.bat`** and choose an option:
+3. Double-click **`start_web.bat`** to open the web console (recommended), or **`run.bat`** for the menu:
 
 ```
+W. Web console: upload logs in the browser, live analysis
+I. Analyse every file in the INPUT folder (any file names)
 1. Demo: simulated attack across Windows, Linux and AWS
 2. Full evaluation on simulated scenarios, about 1 minute
 3. Validation on REAL public data, downloads 44 MB first time, about 3 minutes
@@ -108,7 +134,9 @@ AWS account.
 **Any operating system (command line)**
 
 ```bash
-pip install -r requirements.txt          # networkx, python-evtx, boto3, psutil
+pip install -r requirements.txt          # networkx, python-evtx, boto3, psutil, flask
+python main.py web                        # web console on http://127.0.0.1:8765
+python main.py inbox                      # analyse every file in INPUT/ (any names, .zip/.gz)
 python main.py demo                       # simulated attack -> cases/DEMO/report.html
 python main.py evaluate                   # all scenarios, tamper tests, scalability
 python main.py tamper-demo                # change evidence and watch it being detected
@@ -117,13 +145,15 @@ python main.py triage                     # live evidence from this computer
 python main.py verify --case cases/DEMO   # re-verify the chain of custody
 
 pip install -r requirements-dev.txt       # adds moto and freezegun
-python main.py selftest                   # 46 automated tests
+python main.py selftest                   # 53 automated tests
 ```
 
 ## Repository layout
 
 ```
-main.py              command-line entry point (12 commands)
+main.py              command-line entry point (14 commands)
+webapp.py, web/      web console (Flask, 127.0.0.1): upload, live pipeline, cases, custody tests
+intake.py            recognises evidence files by content (any name, .zip, .gz, folders)
 collect.py           acquisition with hashing, Windows/AWS/Linux collectors
 hostcollect.py       live host triage (Windows, Linux, macOS)
 cloudstate.py        read-only AWS account-state collector
@@ -137,12 +167,13 @@ evaluate.py          scenarios S1-S5, tamper tests, ablation, scalability
 generate_data.py     simulated attacks with ground truth
 realdata.py          validation on public datasets
 cloud_emulation.py   AWS tests on the moto emulator
-tests/               46 automated tests
+tests/               53 automated tests
+INPUT/               drop folder for "python main.py inbox"
 results/             evaluation output used in the dissertation
 docs/                live console (GitHub Pages) and images
 ```
 
-15 Python modules, 5,313 lines of code, standard library plus `networkx`, `python-evtx`, `boto3` and `psutil`.
+17 Python modules (6,144 lines) plus the web console (HTML/CSS/JS, 584 lines); standard library plus `networkx`, `python-evtx`, `boto3`, `psutil` and `flask`.
 
 ## Citation
 

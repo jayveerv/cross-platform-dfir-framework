@@ -11,6 +11,31 @@ timeline me jodta hai, aur har step ka hash-based chain of custody rakhta hai.
 
 ---
 
+## ★ Web Console (naya, 11 Oct 2026) — framework ko asli software ki tarah chalao
+
+**`start_web.bat`** par double-click karo (ya `run.bat` → **W**). Browser me **http://127.0.0.1:8765** khulta hai.
+Server sirf isi computer par sunta hai (127.0.0.1), internet par kuch nahi jaata.
+
+| Kya kar sakte ho | Kaise |
+|---|---|
+| **Apni logs analyze karo** | Files ya poora folder **drag & drop** karo. **Naam kuch bhi ho** — framework har file ke andar dekh ke pehchaanta hai: Windows (.evtx / Event Viewer XML), Linux (auth.log / secure, .gz bhi), AWS CloudTrail JSON, .zip archive |
+| **Built-in attack chalao** | S1–S5 scenario chuno → "Run scenario" (demo / viva ke liye) |
+| **INPUT folder** | Explorer se files `INPUT\` folder me copy karo → "Analyse INPUT folder" (ya `run.bat` → **I**) |
+| **Is laptop ka live triage** | "Start live triage" — processes, network, accounts, persistence, recent files, logs (Run as administrator se poora data) |
+| **Live progress** | Intake → Acquisition → Normalization → Correlation → Chain of custody → Report, har stage live dikhta hai |
+| **Case dekho** | Overview (verdict, KPIs, rules fired), Incidents (timeline, kill chain, entity graph — platforms kaise jude), Evidence (har original file ka SHA-256), Chain of custody (ledger blocks, re-verify, **tamper test copy par**), Events (search / filter) |
+| **Export** | Full forensic HTML report, timeline CSV, poora case .zip |
+| **Purane cases** | "Cases" me sab investigations list hoti hain, dobara khol sakte ho |
+
+**Evidence intake (`intake.py`)**: original files kabhi badli nahi jaati. Har original ka SHA-256 `intake_manifest.json`
+me likha jaata hai aur ye **custody ledger ki pehli entry** banti hai, phir normal acquisition (hash before/after copy) chalta hai.
+Same platform ki kai files (jaise `auth.log`, `auth.log.1`, `auth.log.2.gz`) apne aap ek me jud jaati hain.
+Jo file pehchaani nahi gayi (jaise notes.txt) wo "Not recognised" dikhti hai aur analysis me use nahi hoti.
+
+Command line: `python main.py web` · `python main.py inbox [--input DIR]` · `python intake.py FILES... --out DIR`
+
+---
+
 ## 0. Sundar Dashboard (sabse pehle ye dekho)
 
 **`view_dashboard.bat`** par double-click karo — **CP-DFIR Investigation Console** browser me
@@ -45,6 +70,8 @@ Upar ◐ button se light theme. Kisi section ko seedha kholna ho to `dashboard.h
 
 | Menu | Kya karta hai |
 |---|---|
+| **W** | **Web Console** (upar dekho) |
+| **I** | **INPUT folder** ki saari files analyze karo (koi bhi naam) |
 | 1 | Demo: simulated attack, report browser me khulti hai |
 | 2 | Simulated scenarios par full evaluation (~1 min) |
 | 3 | **Asli public data par validation** (pehli baar ~44 MB download, ~3 min) |
@@ -52,10 +79,10 @@ Upar ◐ button se light theme. Kisi section ko seedha kholna ho to `dashboard.h
 | 5 | **Apni logs analyze karo** |
 | 6 | Is laptop ka Windows Security log export karo (**Run as Administrator**) |
 | 7 | AWS CloudTrail events **aur account state** (IAM, access keys, S3, security groups) kheecho (AWS credentials chahiye) |
-| 8 | Unit tests (46 tests) |
+| 8 | Unit tests (53 tests) |
 | 9 | **TRIAGE**: is laptop ka live evidence (processes, sockets, accounts, persistence, files, logs) collect karo, analyze karo, report banao |
 
-Command line: `python main.py triage | collect-host | demo | evaluate | real-eval | tamper-demo | analyze --input DIR | collect-live | collect-aws | collect-linux | verify --case DIR | selftest`
+Command line: `python main.py web | inbox | triage | collect-host | demo | evaluate | real-eval | tamper-demo | analyze --input DIR | collect-live | collect-aws | collect-linux | verify --case DIR | selftest`
 
 ---
 
@@ -63,6 +90,7 @@ Command line: `python main.py triage | collect-host | demo | evaluate | real-eva
 
 | Layer | File | Kaam |
 |---|---|---|
+| **Intake** | **`intake.py`** | Kisi bhi naam ki file / .zip / .gz / folder ko content se pehchaanna (Windows / Linux / AWS / host / cloud), originals ka SHA-256 manifest |
 | Acquisition | `collect.py`, **`hostcollect.py`, `cloudstate.py`** | Logs `evidence/` me copy (hash pehle aur baad). **Live host collector** (section 3b), Windows `wevtutil` (XML/.evtx), AWS boto3 `LookupEvents`, Linux local/SSH |
 | Normalization | `normalize.py` | Sab formats ek schema me, sab time UTC me |
 | Correlation | `correlate.py` | 57 rule types, sab MITRE ATT&CK mapped (Windows 16, Linux 2, login/brute force 2, AWS CloudTrail 11, live host 15, AWS account posture 11) + NetworkX entity graph. Har connected component jisme activity alert hai, ek incident (posture findings akele incident nahi banate) |
@@ -70,7 +98,8 @@ Command line: `python main.py triage | collect-host | demo | evaluate | real-eva
 | Reporting | `report.py` | Self-contained HTML report (internet ya JavaScript nahi chahiye) |
 | Evaluation | `evaluate.py`, `generate_data.py` | Simulated scenarios + ground truth, tampering tests, scalability |
 | **Real-data validation** | `realdata.py` | **Asli** public logs par test (section 4) |
-| Tests | `tests/` | 46 tests: asli processes/sockets (Linux), AWS collectors (botocore Stubber, AWS service model se validated), SSH collector (fake runner), parsers, rules, custody |
+| **Web Console** | **`webapp.py`, `web/`** | Local web app (Flask, 127.0.0.1): upload, live pipeline progress, cases, kill chain, entity graph, custody re-verify, tamper test, export |
+| Tests | `tests/` | 53 tests (7 naye: intake + web console): asli processes/sockets (Linux), AWS collectors (botocore Stubber, AWS service model se validated), SSH collector (fake runner), parsers, rules, custody |
 
 **Supported inputs**
 - **Windows:** `wevtutil` XML export ya binary **`.evtx`**. Security (4624, 4625, 4634, 4672, 4688, 4698, 4720, 4732, 5145, 1102), System (7045, 104), **Sysmon (1, 3, 10, 13)**, PowerShell 4104
